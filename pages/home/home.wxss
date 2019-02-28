@@ -90,20 +90,20 @@
   margin-bottom: 60rpx;
 }
 
-.rightTop text{
+.rightTop text {
   margin-left: 20rpx;
 }
 
-.rightTop_ text{
+.rightTop_ text {
   margin-left: 20rpx;
 }
 
-.rightTop image{
+.rightTop image {
   width: 30rpx;
   height: 30rpx;
   float: right;
   margin-right: 10rpx;
-  margin-top: 20rpx
+  margin-top: 20rpx;
 }
 
 .rightTop_ {
@@ -118,12 +118,12 @@
   font-weight: bold;
 }
 
-.rightTop_ image{
+.rightTop_ image {
   width: 30rpx;
   height: 30rpx;
   float: right;
   margin-right: 10rpx;
-  margin-top: 20rpx
+  margin-top: 20rpx;
 }
 
 .rightbottom {
@@ -323,7 +323,23 @@
   color: #8888;
 }
 
-#lokimg{
+#lokimg {
   width: 22rpx;
   height: 22rpx;
+}
+
+.putsty {
+  width: 100%;
+  height: 80rpx;
+  font-size: 24rpx;
+  margin-top: 20rpx;
+  border-bottom: 2rpx solid #eee;
+}
+
+.putsty image {
+  width: 64rpx;
+  height: 64rpx;
+  float: left;
+  margin-right: 10rpx;
+  margin-left: 10rpx;
 }

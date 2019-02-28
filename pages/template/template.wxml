@@ -70,8 +70,9 @@
           </view>
         </block>
       </view>
-      <view class='modal_footer' bindtap='closemodal'>
-        关闭
+      <view class='modal_footer'>
+        <view bindtap='modifymodal' class='mbtn'>修改</view>
+        <view bindtap='closemodal' class='cbtn'>关闭</view>        
       </view>
     </view>
   </view>
@@ -92,7 +93,7 @@
         </view>
         <view class='loginline'>
           <text style='float:left;line-height:60rpx;' space='emsp'>学号: </text>
-          <input name="stunumber" style='float:left' type='text' value='{{stunumber}}'></input>
+          <input name="stunumber" style='float:left' type='number' value='{{stunumber}}'></input>
         </view>
         <view class='loginline'>
           <picker mode="date" start="1999-01-01" end="2100-01-01" bindchange="datebtnS">
@@ -132,7 +133,7 @@
         </view>
         <view class='loginline'>
           <text style='float:left;line-height:60rpx;' space='emsp'>学号: </text>
-          <input name="stunumber" style='float:left' type='text' value='{{stunumber}}'></input>
+          <input name="stunumber" style='float:left' type='number' value='{{stunumber}}'></input>
         </view>
         <view class='loginline'>
           <picker bindchange="bindgrade" range="{{gradeR}}">

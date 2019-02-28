@@ -18,7 +18,7 @@
   </view>
   <view class='leftbtn {{onCk == 2?"active":""}}' bindtap='changeList' data-index='2' wx:if='{{userinfo.identity == "家长"||userinfo.identity == "教师"}}'>
     <image src='../images/logs.png'></image>
-  </view> 
+  </view>
 </view>
 <view class='rightList'>
   <block wx:if='{{onCk == 0}}'>
@@ -163,5 +163,35 @@
         </view>
       </block>
     </scroll-view>
+  </block>
+  <block wx:elif='{{onCk == 3}}'>
+    <view class='rightTop'>
+      <text>新增学生信息</text>
+    </view>
+    <form bindsubmit='addStu' class='forms'>
+      <view class='putsty'>
+        <image src='../images/TX.png'></image>
+        <text style='float:left;line-height:70rpx;font-weight: bold' space='emsp'>学生姓名: </text>
+        <input name="realname" style='float:left;margin-top:10rpx' type='text' value='{{savestu.realname}}'></input>
+      </view>
+      <view class='putsty'>
+        <image src='../images/TX.png'></image>
+        <text style='float:left;line-height:70rpx;font-weight: bold' space='emsp'>学号: </text>
+        <input name="jobnumber" style='float:left;margin-top:10rpx' type='number' value='{{savestu.jobnumber}}'></input>
+      </view>
+      <view class='putsty'>
+        <image src='../images/TX.png'></image>
+        <text style='float:left;line-height:70rpx;font-weight: bold' space='emsp'>所在年级: </text>
+        <input name="grade" style='float:left;margin-top:10rpx' type='text' value='{{savestu.grade}}' disabled='true'></input>
+      </view>
+      <view class='putsty'>
+        <image src='../images/TX.png'></image>
+        <text style='float:left;line-height:70rpx; font-weight: bold' space='emsp'>所在班级: </text>
+        <input name="classes" style='float:left;margin-top:10rpx' type='text' value='{{savestu.classes}}' disabled='true'></input>
+      </view>
+      <button class='btnsave' form-type='submit' type='warn'>
+        保存
+      </button>
+    </form>
   </block>
 </view>

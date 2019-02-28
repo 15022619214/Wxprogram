@@ -191,7 +191,13 @@ Page({
     dateM: '2018-01-01',
     childid: 0,
     start: '',
-    logsize: false
+    logsize: false,
+    savestu: {
+      stuname: '',
+      stunumber: '',
+      grade: '',
+      classes: ''
+    }
   },
   /**
    * 生命周期函数--监听页面加载
@@ -333,6 +339,16 @@ Page({
           getLeavelogList(this_, dataLeaveList);
         }
         break;
+      case '3':
+        this.setData({
+          savestu: {
+            stuname: '',
+            stunumber: '',
+            grade: teachgrade,
+            classes: teachclass
+          }
+        })
+        break;
     }
   },
   radioChange: function(e) {
@@ -408,6 +424,11 @@ Page({
       priinfor: {
         hidden: true
       }
+    })
+  },
+  modifymodal: function () {
+    this.setData({
+      onCk:3
     })
   },
   findStu: function() {
@@ -539,6 +560,68 @@ Page({
       'stuclass': teachclass
     }
     getPrisList(this, dataPrisList)
+  },
+  addStu: function(e) {
+    var this_ = this;
+    if (e.detail.value.realname == '') {
+      wx.showToast({
+        title: '姓名不能为空',
+        icon: 'none'
+      })
+      return;
+    }
+    if (e.detail.value.jobnumber == '') {
+      wx.showToast({
+        title: '学号不能为空',
+        icon: 'none'
+      })
+      return;
+    }
+    var dataSave = {
+      'stuname': e.detail.value.realname,
+      'stunumber': e.detail.value.jobnumber,
+      'stugrade': e.detail.value.grade,
+      'stuclass': e.detail.value.classes
+    }
+    wx.request({
+      url: 'http://123.56.195.35/askforleave/admin/savePristuds',
+      method: 'GET',
+      data: {
+        'params': JSON.stringify(dataSave)
+      },
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function(res) {
+        if (res.data.info == 'add') {
+          wx.showToast({
+            title: '保存成功',
+            icon: 'none'
+          })
+          this_.setData({
+            savestu: {
+              stuname: '',
+              stunumber: '',
+              grade: teachgrade,
+              classes: teachclass
+            }
+          })
+        } else if (res.data.info == 'edit') {
+          wx.showToast({
+            title: '修改成功',
+            icon: 'none'
+          })
+          this_.setData({
+            savestu: {
+              stuname: '',
+              stunumber: '',
+              grade: teachgrade,
+              classes: teachclass
+            }
+          })
+        }
+      }
+    })
   }
 
 })
