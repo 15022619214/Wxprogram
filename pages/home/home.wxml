@@ -77,6 +77,11 @@
         </view>
       </block>
     </scroll-view>
+    <view class='topList' wx:if='{{userinfo.identity == "教师"}}'>
+      <view class='disinlineJS_'>总人数：0</view>
+      <view class='disinlineJS_'>请假人数：0</view>
+      <view class='disinlineJS_'>实际人数：0</view>
+    </view>
     <view class='bottomS'></view>
   </block>
   <block wx:elif='{{onCk == 1}}'>
@@ -166,18 +171,18 @@
   </block>
   <block wx:elif='{{onCk == 3}}'>
     <view class='rightTop'>
-      <text>新增学生信息</text>
+      <text>新增/修改学生信息</text>
     </view>
     <form bindsubmit='addStu' class='forms'>
       <view class='putsty'>
         <image src='../images/TX.png'></image>
         <text style='float:left;line-height:70rpx;font-weight: bold' space='emsp'>学生姓名: </text>
-        <input name="realname" style='float:left;margin-top:10rpx' type='text' value='{{savestu.realname}}'></input>
+        <input name="realname" style='float:left;margin-top:10rpx' type='text' value='{{savestu.stuname}}'></input>
       </view>
       <view class='putsty'>
         <image src='../images/TX.png'></image>
         <text style='float:left;line-height:70rpx;font-weight: bold' space='emsp'>学号: </text>
-        <input name="jobnumber" style='float:left;margin-top:10rpx' type='number' value='{{savestu.jobnumber}}'></input>
+        <input name="jobnumber" style='float:left;margin-top:10rpx' type='number' value='{{savestu.stunumber}}'></input>
       </view>
       <view class='putsty'>
         <image src='../images/TX.png'></image>

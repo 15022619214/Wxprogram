@@ -226,7 +226,7 @@ Page({
       success: function(res) {
         this_.setData({
           autoheight: res.windowHeight,
-          scrollheight: res.windowHeight - 310,
+          scrollheight: res.windowHeight - 340,
           logheight: res.windowHeight - 40
         })
       }
@@ -426,9 +426,19 @@ Page({
       }
     })
   },
-  modifymodal: function () {
+  modifymodal: function(e) {
+    console.log(e.currentTarget.dataset.infors);
     this.setData({
-      onCk:3
+      priinfor: {
+        hidden: true
+      },
+      onCk: 3,
+      savestu: {
+        stuname: e.currentTarget.dataset.infors.stuname,
+        stunumber: e.currentTarget.dataset.infors.stunumber,
+        grade: e.currentTarget.dataset.infors.stugrade,
+        classes: e.currentTarget.dataset.infors.stuclass
+      }
     })
   },
   findStu: function() {

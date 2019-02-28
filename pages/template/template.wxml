@@ -71,8 +71,8 @@
         </block>
       </view>
       <view class='modal_footer'>
-        <view bindtap='modifymodal' class='mbtn'>修改</view>
-        <view bindtap='closemodal' class='cbtn'>关闭</view>        
+        <view bindtap='modifymodal' class='mbtn' data-infors='{{infors}}'>修改</view>
+        <view bindtap='closemodal' class='cbtn'>关闭</view>
       </view>
     </view>
   </view>
@@ -137,14 +137,14 @@
         </view>
         <view class='loginline'>
           <picker bindchange="bindgrade" range="{{gradeR}}">
-              <text style='float:left;line-height:70rpx;' space='emsp'>年级: </text>
-              <input  style='float:left' type='text' value='{{grade}}' disabled='true' name='grade'></input>
+            <text style='float:left;line-height:70rpx;' space='emsp'>年级: </text>
+            <input style='float:left' type='text' value='{{grade}}' disabled='true' name='grade'></input>
           </picker>
         </view>
         <view class='loginline'>
           <picker bindchange="bindclass" range="{{classesR}}">
-              <text style='float:left;line-height:70rpx;' space='emsp'>班级: </text>
-              <input  style='float:left' type='text' value='{{classes}}' disabled='true' name='classes'></input>
+            <text style='float:left;line-height:70rpx;' space='emsp'>班级: </text>
+            <input style='float:left' type='text' value='{{classes}}' disabled='true' name='classes'></input>
           </picker>
         </view>
         <view class='loginline'>
