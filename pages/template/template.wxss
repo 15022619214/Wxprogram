@@ -236,13 +236,17 @@
   margin-top: 20rpx;
 }
 
+.btnserah::after {
+  border-radius: 0rpx;
+}
+
 .mbtn {
   width: 50%;
   border-right: 2rpx solid #eee;
-  float: left
+  float: left;
 }
 
 .cbtn {
   width: 49%;
-  float: left
+  float: left;
 }
