@@ -2,7 +2,6 @@
   "pages":[   
     "pages/index/index",
     "pages/home/home",
-    "pages/childinfo/childinfo",
     "pages/perfectinfor/perfectinfor",
     "pages/logs/logs"
   ],
