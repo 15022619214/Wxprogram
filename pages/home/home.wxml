@@ -2,6 +2,7 @@
 <template is='reginfo' data='{{...modalinfo}}' />
 <template is='priinfor' data='{{...priinfor}}' />
 <template is='searchmodal' data='{{...searchinfor}}' />
+<template is='searcStuhmodal' data='{{...searcStuhmodal,...gclist}}' />
 <view class='leftList'>
   <view class='leftinfo'>
     <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
@@ -12,12 +13,12 @@
   <view class='leftbtn {{onCk == 1?"active":""}}' bindtap='changeList' data-index='1' wx:if='{{userinfo.identity == "家长"}}'>
     <image src='../images/afl.png'></image>
   </view>
-  <view class='leftbtn {{onCk == 2?"active":""}}' bindtap='changeList' data-index='2' wx:if='{{userinfo.identity == "家长"||userinfo.identity == "教师"}}'>
-    <image src='../images/logs.png'></image>
-  </view>
   <view class='leftbtn {{onCk == 3?"active":""}}' bindtap='changeList' data-index='3' wx:if='{{userinfo.identity == "教师"}}'>
     <image src='../images/adduser.png'></image>
   </view>
+  <view class='leftbtn {{onCk == 2?"active":""}}' bindtap='changeList' data-index='2' wx:if='{{userinfo.identity == "家长"||userinfo.identity == "教师"}}'>
+    <image src='../images/logs.png'></image>
+  </view> 
 </view>
 <view class='rightList'>
   <block wx:if='{{onCk == 0}}'>
@@ -54,6 +55,7 @@
     <view class='rightTop_'>
       <text wx:if='{{userinfo.identity == "家长"}}'>学生信息</text>
       <text wx:elif='{{userinfo.identity == "教师"}}'>学生列表</text>
+      <image src='../images/find.png' bindtap='findStuList' wx:if='{{userinfo.identity == "教师"}}'></image>
     </view>
     <view class='topList'>
       <view class='{{userinfo.identity == "教师"?"disinlineJS":"disinline"}}'>年级</view>
@@ -62,7 +64,7 @@
       <view class='{{userinfo.identity == "教师"?"disinlineJS":"disinline"}}'>学号</view>
       <view class='{{userinfo.identity == "教师"?"disinlineJS":"disinline"}}' wx:if='{{userinfo.identity == "教师"}}'>操作</view>
     </view>
-    <scroll-view class='rightList_' scroll-y="true" style='height:{{scrollheight}}px' bindscrolltolower='scorbtn'>
+    <scroll-view class='rightList_' scroll-y="true" style='height:{{scrollheight}}px' bindscrolltolower='scorStubtn'>
       <block wx:for='{{userinfoStu}}' wx:key=''>
         <view class='listhome'>
           <view class='{{userinfo.identity == "教师"?"homeinlineJS":"homeinline"}}'>{{item.stugrade}}</view>

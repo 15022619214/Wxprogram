@@ -97,13 +97,53 @@
         <view class='loginline'>
           <picker mode="date" start="1999-01-01" end="2100-01-01" bindchange="datebtnS">
             <text style='float:left;line-height:60rpx;' space='emsp'>日期[始]: </text>
-            <input name="leavedates" style='float:left' type='text' value='{{leavedates}}'></input>
+            <input name="leavedates" style='float:left' type='text' value='{{leavedates}}' disabled='true'></input>
           </picker>
         </view>
         <view class='loginline'>
           <picker mode="date" start="{{leavedatee}}" end="2100-01-01" bindchange="datebtnM">
             <text style='float:left;line-height:60rpx;' space='emsp'>日期[末]: </text>
-            <input name="leavedatee" style='float:left' type='text' value='{{leavedatee}}'></input>
+            <input name="leavedatee" style='float:left' type='text' value='{{leavedatee}}' disabled='true'></input>
+          </picker>
+        </view>
+        <view class='loginline'>
+          <button form-type='reset' type='default' class='btnserah'>重置</button>
+        </view>
+        <view class='loginline'>
+          <button form-type='submit' type='warn' class='btnserah'>查询</button>
+        </view>
+      </view>
+    </form>
+  </view>
+</template>
+
+<template name='searcStuhmodal'>
+  <view class='modal_masks {{modalsactive}}'></view>
+  <view class='serachUlog {{modalsactive}}'>
+    <view class='modal_titles'>
+      <text>查找学生列表</text>
+      <image src='../images/right.png' bindtap='rightbtnStu'></image>
+    </view>
+    <form bindsubmit="serachUlist" bindreset='restUlist'>
+      <view class='logflex'>
+        <view class='loginline'>
+          <text style='float:left;line-height:60rpx;' space='emsp'>姓名: </text>
+          <input name="stuname" style='float:left' type='text' value='{{stuname}}'></input>
+        </view>
+        <view class='loginline'>
+          <text style='float:left;line-height:60rpx;' space='emsp'>学号: </text>
+          <input name="stunumber" style='float:left' type='text' value='{{stunumber}}'></input>
+        </view>
+        <view class='loginline'>
+          <picker bindchange="bindgrade" range="{{gradeR}}">
+              <text style='float:left;line-height:70rpx;' space='emsp'>年级: </text>
+              <input  style='float:left' type='text' value='{{grade}}' disabled='true' name='grade'></input>
+          </picker>
+        </view>
+        <view class='loginline'>
+          <picker bindchange="bindclass" range="{{classesR}}">
+              <text style='float:left;line-height:70rpx;' space='emsp'>班级: </text>
+              <input  style='float:left' type='text' value='{{classes}}' disabled='true' name='classes'></input>
           </picker>
         </view>
         <view class='loginline'>
