@@ -1,0 +1,237 @@
+.modal_mask {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.modal_content {
+  position: fixed;
+  width: 600rpx;
+  height: 511rpx;
+  overflow: hidden;
+  background: #fafafa;
+  z-index: 1001;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 10rpx;
+}
+
+.modal_content_1 {
+  position: fixed;
+  width: 600rpx;
+  height: 440rpx;
+  overflow: hidden;
+  background: #fafafa;
+  z-index: 1001;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 10rpx;
+}
+
+.modal_footer {
+  border-top: 2rpx solid #eee;
+  text-align: center;
+  font-size: 24rpx;
+  color: #d81e06;
+  letter-spacing: 10rpx;
+  line-height: 70rpx;
+}
+
+.serachtemplate {
+  width: 100%;
+  height: 146rpx;
+  border-bottom: 2rpx solid #eee;
+  background-color: #fff;
+  z-index: 1;
+}
+
+.serachflex {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10rpx;
+  margin-top: 10rpx;
+}
+
+.templateList {
+  width: 100%;
+  height: 60rpx;
+  background-color: #fff;
+  border-top: 2rpx solid #eee;
+}
+
+.inpsty {
+  width: 70%;
+  height: 60rpx;
+  border-radius: 20rpx;
+  border: 2rpx solid #eee;
+  font-size: 26rpx;
+  padding-left: 20rpx;
+  margin-left: 10rpx;
+}
+
+.templateinline {
+  display: inline-block;
+  width: 25%;
+  text-align: center;
+  line-height: 60rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  letter-spacing: 4rpx;
+}
+
+.infolist {
+  width: 100%;
+  height: 60rpx;
+  background-color: #fff;
+}
+
+.infolist_ {
+  width: 100%;
+  height: 200rpx;
+}
+
+.infoinline {
+  display: inline-block;
+  width: 25%;
+  text-align: center;
+  line-height: 60rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  letter-spacing: 4rpx;
+}
+
+.modal_title {
+  border-top: 10rpx solid #c60;
+  text-align: center;
+  font-size: 24rpx;
+  color: #fff;
+  letter-spacing: 10rpx;
+  line-height: 70rpx;
+  background-color: #222;
+  font-weight: bold;
+}
+
+.modal_titles {
+  border-top: 10rpx solid #c60;
+  font-size: 24rpx;
+  color: #fff;
+  letter-spacing: 10rpx;
+  line-height: 70rpx;
+  background-color: #222;
+  font-weight: bold;
+}
+
+.modal_titles text {
+  margin-left: 20rpx;
+}
+
+.modal_titles image {
+  width: 30rpx;
+  height: 30rpx;
+  float: right;
+  margin-right: 10rpx;
+  margin-top: 20rpx;
+}
+
+.stumodal {
+  width: 95%;
+  height: 145rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: 0rpx auto;
+}
+
+.modainline {
+  width: 50%;
+  height: 70rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  line-height: 70rpx;
+}
+
+.modainline_ {
+  width: 100%;
+  height: 70rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  line-height: 70rpx;
+}
+
+.modainline text, .modainline_ text {
+  font-size: 24rpx;
+  line-height: 70rpx;
+  font-weight: normal;
+}
+
+.modal_masks {
+  position: fixed;
+  width: 85%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  transform: translateX(100%);
+  transition: all 0.4s;
+}
+
+.serachUlog {
+  width: 84%;
+  height: 430rpx;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #fff;
+  z-index: 1001;
+  transform: translateX(100%);
+  transition: all 0.4s;
+}
+
+.modalsactive {
+  transform: translateX(0);
+}
+
+.logflex {
+  width: 95%;
+  height: 145rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: 0rpx auto;
+}
+
+.loginline {
+  display: inline-block;
+  width: 50%;
+  font-size: 24rpx;
+}
+
+.loginline input {
+  border: 2rpx dashed #8888;
+}
+
+.btnserah{
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  color: #fff;
+  letter-spacing: 20rpx;
+  border-radius: 0rpx;
+  font-size: 30rpx;
+  margin-top: 20rpx;
+}

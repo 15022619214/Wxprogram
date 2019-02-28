@@ -1,0 +1,15 @@
+{
+  "pages":[   
+    "pages/index/index",
+    "pages/home/home",
+    "pages/childinfo/childinfo",
+    "pages/perfectinfor/perfectinfor",
+    "pages/logs/logs"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#222",
+    "navigationBarTitleText": "请假条",
+    "navigationBarTextStyle":"white"
+  }
+}

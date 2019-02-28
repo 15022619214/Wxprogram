@@ -1,0 +1,8 @@
+<!--index.wxml-->
+<import src ="../template/template.wxml"/>
+<template is='userInfo' data='{{...modalinfo}}'/>  
+<view class="container">
+  <view class="userinfo">
+    <button  open-type="getUserInfo" bindgetuserinfo="getUserInfo" class='btnStyle' type='warn'> {{btninfo}} </button>
+  </view>
+</view>

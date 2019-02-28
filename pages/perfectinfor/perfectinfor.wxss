@@ -1,0 +1,107 @@
+/* pages/perfectinfor/perfectinfor.wxss */
+@import '../template/template.wxss';
+
+page{
+  padding-top: 83rpx;
+  padding-bottom: 10rpx
+}
+
+image{
+  width: 64rpx;
+  height: 64rpx;
+  float: left;
+  margin-right: 10rpx;
+  margin-left: 10rpx;
+}
+
+text{
+  font-weight: bold
+}
+
+.btnsave{
+  width: 100%;
+  height: 80rpx;
+  text-align: center;
+  line-height: 80rpx;
+  color: #FFF;
+  position: fixed;
+  bottom: 0;
+  z-index: 1;
+  letter-spacing: 20rpx;
+  border-radius: 0rpx;
+  font-size: 30rpx;
+}
+
+.putsty{
+  width: 100%;
+  height: 80rpx;
+  font-size: 24rpx;
+  margin-top: 20rpx;
+  border-bottom: 2rpx solid #EEE
+}
+
+picker view{
+  width: 100%;
+  font-size: 30rpx;
+  
+}
+
+input{
+  width: 500rpx;
+}
+
+.topList{
+  width: 100%;
+  height: 83rpx;
+  background-color: #FFF;
+  position: fixed;
+  top: 0;
+  border-bottom: 2rpx solid #EEEEEE;
+  z-index: 1
+}
+
+.disinline{
+  display: inline-block;
+  width: 33.3333%;
+  text-align: center;
+  line-height: 80rpx;
+  font-size: 24rpx;
+}
+
+.active{
+  font-weight: bold;
+  border-bottom:4rpx solid #d81e06
+}
+
+.List{
+  width: 100%;
+  height: 60rpx;
+  background-color: #fff;
+  border-bottom: 2rpx solid #EEEEEE;
+}
+
+.inline{
+  display: inline-block;
+  width: 25%;
+  text-align: center;
+  line-height: 60rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  letter-spacing: 4rpx;
+}
+
+.infoliststu{
+  width: 100%;
+  height: 60rpx;
+  background-color: #fff;
+  border-bottom: 2rpx solid #eee;
+}
+
+.infoinlinestu{
+  display: inline-block;
+  width: 25%;
+  text-align: center;
+  line-height: 60rpx;
+  font-size: 24rpx;
+  letter-spacing: 4rpx;
+}

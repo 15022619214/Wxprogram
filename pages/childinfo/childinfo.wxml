@@ -1,0 +1,22 @@
+<view class='serach'>
+  <form bindsubmit="serachform">
+    <view class='serachflex'>
+      <input type='number' placeholder='输入学生学号进行搜索' confirm-type="search" class='inpsty' name='childinfo'></input>
+      <button type='warn' form-type='submit' size='mini'>搜索</button>
+    </view>
+  </form>
+  <view class='topList'>
+      <view class='disinline'>年级</view>
+      <view class='disinline'>班级</view>
+      <view class='disinline'>姓名</view>
+      <view class='disinline'>学号</view>
+  </view>
+</view>
+<block>
+  <view class='infolist'>
+    <view class='infoinline'>{{stuinfo.stugrade}}</view>
+    <view class='infoinline'>{{stuinfo.stuclass}}</view>
+    <view class='infoinline'>{{stuinfo.stuname}}</view>
+    <view class='infoinline'>{{stuinfo.stunumber}}</view>
+  </view>
+</block>

@@ -1,0 +1,118 @@
+<template name="userInfo">
+  <modal hidden="{{hidden}}" title="{{infos}}" confirm-text="知道了" bindconfirm="confirm" no-cancel="true">
+  </modal>
+</template>
+<template name="reginfo">
+  <modal hidden="{{hidden}}" title="{{infos}}" confirm-text="前去完善信息" bindconfirm="confirm" no-cancel="true">
+  </modal>
+</template>
+
+<template name="findinfo">
+  <view hidden='{{hidden}}'>
+    <view class='modal_mask'></view>
+    <view class='modal_content'>
+      <view class='modal_title'>查找学生</view>
+      <view class='serachtemplate'>
+        <form bindsubmit="serachform">
+          <view class='serachflex'>
+            <input type='number' placeholder='输入学生学号进行搜索' confirm-type="search" class='inpsty' name='childinfo' value='{{inpval}}'></input>
+            <button type='warn' form-type='submit' size='mini'>搜索</button>
+          </view>
+        </form>
+        <view class='templateList'>
+          <view class='templateinline'>年级</view>
+          <view class='templateinline'>班级</view>
+          <view class='templateinline'>姓名</view>
+          <view class='templateinline'>学号</view>
+        </view>
+      </view>
+      <view class='infolist_'>
+        <view class='infolist' bindtap='getStuinfo' data-stuinfo='{{stuinfo}}'>
+          <view class='infoinline'>{{stuinfo.stugrade}}</view>
+          <view class='infoinline'>{{stuinfo.stuclass}}</view>
+          <view class='infoinline'>{{stuinfo.stuname}}</view>
+          <view class='infoinline'>{{stuinfo.stunumber}}</view>
+        </view>
+      </view>
+      <view class='modal_footer' bindtap='closemodal'>
+        关闭
+      </view>
+    </view>
+  </view>
+</template>
+
+<template name="priinfor">
+  <view hidden='{{hidden}}'>
+    <view class='modal_mask'></view>
+    <view class='modal_content_1'>
+      <view class='modal_title'>学生信息</view>
+      <view class='stumodal'>
+        <view class='modainline'>学生姓名：
+          <text>{{infors.stuname}}</text>
+        </view>
+        <view class='modainline'>学生学号：
+          <text>{{infors.stunumber}}</text>
+        </view>
+        <view class='modainline'>年级：
+          <text>{{infors.stugrade}}</text>
+        </view>
+        <view class='modainline'>班级：
+          <text>{{infors.stuclass}}</text>
+        </view>
+      </view>
+      <view class='stumodal'>
+        <block wx:for='{{infors.parents}}' wx:key=''>
+          <view class='modainline_'>监护人姓名：
+            <text>{{item.realname}}</text>
+          </view>
+          <view class='modainline_'>监护人联系电话：
+            <text>{{item.phone}}</text>
+          </view>
+        </block>
+      </view>
+      <view class='modal_footer' bindtap='closemodal'>
+        关闭
+      </view>
+    </view>
+  </view>
+</template>
+
+<template name='searchmodal'>
+  <view class='modal_masks {{modalsactive}}'></view>
+  <view class='serachUlog {{modalsactive}}'>
+    <view class='modal_titles'>
+      <text>查找请假记录</text>
+      <image src='../images/right.png' bindtap='rightbtn'></image>
+    </view>
+    <form bindsubmit="serachUlogs" bindreset='restUlogs'>
+      <view class='logflex'>
+        <view class='loginline'>
+          <text style='float:left;line-height:60rpx;' space='emsp'>姓名: </text>
+          <input name="stuname" style='float:left' type='text' value='{{stuname}}'></input>
+        </view>
+        <view class='loginline'>
+          <text style='float:left;line-height:60rpx;' space='emsp'>学号: </text>
+          <input name="stunumber" style='float:left' type='text' value='{{stunumber}}'></input>
+        </view>
+        <view class='loginline'>
+          <picker mode="date" start="1999-01-01" end="2100-01-01" bindchange="datebtnS">
+            <text style='float:left;line-height:60rpx;' space='emsp'>日期[始]: </text>
+            <input name="leavedates" style='float:left' type='text' value='{{leavedates}}'></input>
+          </picker>
+        </view>
+        <view class='loginline'>
+          <picker mode="date" start="{{leavedatee}}" end="2100-01-01" bindchange="datebtnM">
+            <text style='float:left;line-height:60rpx;' space='emsp'>日期[末]: </text>
+            <input name="leavedatee" style='float:left' type='text' value='{{leavedatee}}'></input>
+          </picker>
+        </view>
+        <view class='loginline'>
+          <button form-type='reset' type='default' class='btnserah'>重置</button>
+        </view>
+        <view class='loginline'>
+          <button form-type='submit' type='warn' class='btnserah'>查询</button>
+        </view>
+      </view>
+    </form>
+  </view>
+</template>

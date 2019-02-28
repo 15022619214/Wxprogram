@@ -1,0 +1,329 @@
+@import '../template/template.wxss';
+
+.userinfo-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  margin-top: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  font-size: 24rpx;
+  color: #fff;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.usermotto {
+  margin-top: 200px;
+}
+
+.btnStyle {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 100rpx;
+  line-height: 200rpx;
+  letter-spacing: 4rpx;
+  font-weight: bold;
+  font-size: 30rpx;
+}
+
+.leftList {
+  position: fixed;
+  display: inline-block;
+  width: 15%;
+  height: 100%;
+  background-color: #222;
+  text-align: center;
+}
+
+.leftinfo {
+  height: 135rpx;
+  width: 100%;
+  border-top: 10rpx solid #c60;
+  border-bottom: 2rpx solid #444;
+}
+
+.leftbtn {
+  height: 100rpx;
+  width: 95%;
+  border-bottom: 2rpx solid #444;
+}
+
+.leftbtn image {
+  margin-top: 25rpx;
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.active {
+  border-right: 6rpx solid #c60;
+}
+
+.rightList {
+  width: 84.5%;
+  position: fixed;
+  right: 0rpx;
+  height: 100%;
+}
+
+.rightList_ {
+  width: 100%;
+}
+
+.rightList_A {
+  width: 100%;
+  height: 20%;
+}
+
+.rightTop {
+  width: 100%;
+  height: 70rpx;
+  border-top: 10rpx solid #c60;
+  background-color: #222;
+  line-height: 70rpx;
+  color: #fff;
+  font-size: 24rpx;
+  letter-spacing: 20rpx;
+  font-weight: bold;
+  margin-bottom: 60rpx;
+}
+
+.rightTop text{
+  margin-left: 20rpx;
+}
+
+.rightTop_ text{
+  margin-left: 20rpx;
+}
+
+.rightTop image{
+  width: 30rpx;
+  height: 30rpx;
+  float: right;
+  margin-right: 10rpx;
+  margin-top: 20rpx
+}
+
+.rightTop_ {
+  width: 100%;
+  height: 70rpx;
+  border-top: 10rpx solid #c60;
+  background-color: #222;
+  line-height: 70rpx;
+  color: #fff;
+  font-size: 24rpx;
+  letter-spacing: 20rpx;
+  font-weight: bold;
+}
+
+.rightTop_ image{
+  width: 30rpx;
+  height: 30rpx;
+  float: right;
+  margin-right: 10rpx;
+  margin-top: 20rpx
+}
+
+.rightbottom {
+  width: 100%;
+  height: 60rpx;
+}
+
+.titletxt {
+  font-size: 24rpx;
+  font-weight: bold;
+  margin-top: 10rpx;
+  text-align: center;
+  width: 100%;
+  height: 50rpx;
+  line-height: 50rpx;
+}
+
+.flexcontent {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 95%;
+  margin: 0rpx auto;
+}
+
+.flexchild_ {
+  width: 100%;
+  height: 70rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  line-height: 70rpx;
+}
+
+.flexchild_A {
+  width: 100%;
+  height: 40rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  line-height: 40rpx;
+}
+
+.flexchild_A text {
+  font-size: 24rpx;
+  line-height: 40rpx;
+  font-weight: normal;
+}
+
+.flexchild_B {
+  width: 100%;
+  font-size: 24rpx;
+  font-weight: bold;
+  line-height: 40rpx;
+}
+
+.flexchild_B text {
+  font-size: 24rpx;
+  line-height: 40rpx;
+  font-weight: normal;
+}
+
+.flexchild_ text, .flexchild text {
+  font-size: 24rpx;
+  line-height: 70rpx;
+  font-weight: normal;
+}
+
+.flexchild {
+  width: 50%;
+  height: 70rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  line-height: 70rpx;
+}
+
+.topList {
+  width: 100%;
+  height: 60rpx;
+  background-color: #fff;
+  border-top: 2rpx solid #eee;
+  border-bottom: 2rpx solid #eee;
+}
+
+.disinline {
+  display: inline-block;
+  width: 25%;
+  text-align: center;
+  line-height: 60rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  letter-spacing: 4rpx;
+}
+
+.disinlineJS {
+  display: inline-block;
+  width: 20%;
+  text-align: center;
+  line-height: 60rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  letter-spacing: 4rpx;
+}
+
+.listhome {
+  width: 100%;
+  height: 60rpx;
+}
+
+.homeinline {
+  display: inline-block;
+  width: 25%;
+  text-align: center;
+  line-height: 60rpx;
+  font-size: 24rpx;
+  letter-spacing: 4rpx;
+}
+
+.homeinlineJS {
+  display: inline-block;
+  width: 20%;
+  text-align: center;
+  line-height: 60rpx;
+  font-size: 24rpx;
+  letter-spacing: 4rpx;
+}
+
+.topList_ {
+  width: 100%;
+  height: 60rpx;
+  background-color: #fff;
+  border-top: 2rpx solid #eee;
+  border-bottom: 2rpx solid #eee;
+}
+
+.disinline_ {
+  display: inline-block;
+  width: 20%;
+  text-align: center;
+  line-height: 60rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  letter-spacing: 4rpx;
+}
+
+.listhome_ {
+  width: 100%;
+  height: 60rpx;
+}
+
+.homeinline_ {
+  display: inline-block;
+  width: 20%;
+  text-align: center;
+  line-height: 60rpx;
+  font-size: 24rpx;
+  letter-spacing: 4rpx;
+}
+
+.btnsave {
+  width: 84%;
+  height: 80rpx;
+  line-height: 80rpx;
+  color: #fff;
+  position: fixed;
+  bottom: 0;
+  z-index: 1;
+  letter-spacing: 20rpx;
+  border-radius: 0rpx;
+  font-size: 30rpx;
+}
+
+.bottomS {
+  padding-bottom: 98rpx;
+}
+
+.textarea {
+  border: 2rpx dashed #ddd;
+}
+
+.logcontent {
+  width: 99%;
+  border: 2rpx solid #222;
+  margin-top: 5rpx;
+  border-radius: 20rpx;
+  border-top: 10rpx solid #c60;
+  border-bottom: 4rpx solid #222;
+  margin-bottom: 5rpx;
+}
+
+.logsyn {
+  width: 100%;
+  height: 30rpx;
+  line-height: 30rpx;
+  font-size: 24rpx;
+  text-align: center;
+  margin-top: 50%;
+  color: #8888;
+}
+
+#lokimg{
+  width: 22rpx;
+  height: 22rpx;
+}

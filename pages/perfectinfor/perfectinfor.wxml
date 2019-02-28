@@ -1,0 +1,66 @@
+<import src ="../template/template.wxml"/>
+<template is='findinfo' data='{{...modalinfo}}'/>
+<view class='topList'>
+    <view class='disinline {{onCk == 0 ? "active":""}}' bindtap='changeList' data-index='0'>家长</view>
+    <view class='disinline {{onCk == 1 ? "active":""}}' bindtap='changeList' data-index='1'>教师</view>
+    <view class='disinline {{onCk == 2 ? "active":""}}' bindtap='changeList' data-index='2'>食堂职工</view>
+</view>
+<form bindsubmit='userinfofrom' class='forms'>
+  <view class='putsty'>
+   <image src='../images/TX.png'></image>
+   <text style='float:left;line-height:70rpx;' space='emsp' wx:if='{{onCk == 0}}'>家长姓名: </text> 
+   <text style='float:left;line-height:70rpx;' space='emsp' wx:elif='{{onCk == 1}}'>教师姓名: </text> 
+   <text style='float:left;line-height:70rpx;' space='emsp' wx:elif='{{onCk == 2}}'>职工姓名: </text> 
+   <input name="name" style='float:left;margin-top:10rpx' type='text' value='{{item.realname}}'></input>
+  </view>
+  <view class='putsty' wx:if='{{onCk == 1||onCk == 2}}'>
+   <image src='../images/TX.png'></image>
+   <text style='float:left;line-height:70rpx;' space='emsp' wx:if='{{onCk == 1}}'>教师工号: </text> 
+   <text style='float:left;line-height:70rpx;' space='emsp' wx:elif='{{onCk == 2}}'>职工工号: </text> 
+   <input name="jobnumber" style='float:left;margin-top:10rpx' type='number' value='{{item.jobnumber}}'></input>
+  </view>
+  <picker bindchange="bindgrade" range="{{grade}}"  wx:if='{{onCk == 1}}'>
+    <view class='putsty'>
+      <image src='../images/TX.png'></image>
+      <text style='float:left;line-height:70rpx;' space='emsp'>职教年级: </text> 
+      <input name="grade" style='float:left;margin-top:10rpx' type='text' value='{{gradeV}}' disabled='true'></input>
+    </view>
+  </picker>
+  <picker bindchange="bindclass" range="{{classes}}"  wx:if='{{onCk == 1}}'>
+    <view class='putsty'>
+      <image src='../images/TX.png'></image>
+      <text style='float:left;line-height:70rpx;' space='emsp'>职教班级: </text> 
+      <input name="classes" style='float:left;margin-top:10rpx' type='text' value='{{classesV}}'  disabled='true'></input>
+    </view>
+  </picker>
+  <view class='putsty'>
+   <image src='../images/TX.png'></image>
+   <text style='float:left;line-height:70rpx;' space='emsp'>手机号码: </text> 
+   <input name="phone" style='float:left;margin-top:10rpx' type='number' value='{{item.phone}}'></input>
+  </view>
+  <view class='putsty' wx:if='{{onCk == 0}}'>
+   <image src='../images/TX.png'></image>
+   <text style='float:left;line-height:70rpx;' space='emsp'>学生信息: </text> 
+   <button size='mini' bindtap='getChildinfo'> 选 择 学 生 </button>
+   <text decode='true'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+   <button size='mini' bindtap='clearinfo' type='warn'> 清 空 信 息 </button>
+  </view>
+  <view class='List' wx:if='{{onCk == 0}}'>
+    <view class='inline'>年级</view>
+    <view class='inline'>班级</view>
+    <view class='inline'>姓名</view>
+    <view class='inline'>学号</view>
+  </view>
+  <block wx:for='{{pageinfo}}' wx:if='{{onCk == 0}}' wx:key=''>
+    <view class='infoliststu'>
+      <view class='infoinlinestu'>{{item.stugrade}}</view>
+      <view class='infoinlinestu'>{{item.stuclass}}</view>
+      <view class='infoinlinestu'>{{item.stuname}}</view>
+      <view class='infoinlinestu'>{{item.stunumber}}</view>
+    </view>
+  </block>
+  
+  <button class='btnsave' form-type='submit' type='warn'>
+    保存
+  </button>
+</form>
