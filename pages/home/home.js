@@ -1,5 +1,5 @@
 // pages/home/home.js
-const app = getApp()
+const app = getApp();
 var teachgrade = null;
 var teachclass = null;
 var findByuserinfo = function(this_) {
@@ -13,6 +13,8 @@ var findByuserinfo = function(this_) {
       'Content-Type': 'application/json'
     },
     success: function(res) {
+      console.log(res.data.role.id,'权限ID')
+      var roleID = res.data.role.id;
       if (res.data == null) {
         this_.setData({
           modalinfo: {
@@ -25,7 +27,7 @@ var findByuserinfo = function(this_) {
           userinfo: res.data,
           userinfoStu: res.data.pristudents
         })
-        if (res.data.identity == '教师') {
+        if (res.data.identity == '班主任') {
           teachgrade = res.data.teachgrade;
           teachclass = res.data.teachclass;
           var dataPrisList = {
@@ -35,6 +37,9 @@ var findByuserinfo = function(this_) {
             'stuclass': teachclass
           }
           getPrisList(this_, dataPrisList);
+          getLeavenumteach(this_);
+        } else if (res.data.identity == '食堂职工') {
+          getLeveNum(this_);
         }
       }
       wx.hideNavigationBarLoading();
@@ -146,6 +151,40 @@ var getPrisList = function(this_, data) {
     }
   })
 }
+var getLeveNum = function(this_) {
+  wx.request({
+    url: 'http://123.56.195.35/askforleave/leave/getLeavenum',
+    method: 'GET',
+    header: {
+      'Content-Type': 'application/json'
+    },
+    success: function(res) {
+      this_.setData({
+        cokeNum: res.data.realnum
+      })
+    }
+  })
+}
+
+var getLeavenumteach = function(this_) {
+  wx.request({
+    url: 'http://123.56.195.35/askforleave/leave/getLeavenumteach',
+    method: 'GET',
+    data: {
+      'username': app.globalData.userOpenId
+    },
+    header: {
+      'Content-Type': 'application/json'
+    },
+    success: function(res) {
+      this_.setData({
+        allnum: res.data.allnum,
+        leavenums: res.data.leavenums,
+        realnum: res.data.realnum
+      })
+    }
+  })
+}
 Page({
 
   /**
@@ -197,17 +236,17 @@ Page({
       stunumber: '',
       grade: '',
       classes: ''
-    }
+    },
+    cokeNum: 0,
+    allnum: 0,
+    leavenums: 0,
+    realnum: 0
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    wx.showNavigationBarLoading();
-    this.setData({
-      userInfo: app.globalData.userInfo,
-    })
-    findByuserinfo(this);
+
   },
 
   /**
@@ -221,6 +260,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+    wx.showNavigationBarLoading();
+    pageNumber_ = 1;
+    userinfoStu = [];
+    this.setData({
+      userinfoStu: []
+    })
+    this.setData({
+      userInfo: app.globalData.userInfo,
+    })
+    findByuserinfo(this);
     var this_ = this;
     wx.getSystemInfo({
       success: function(res) {
@@ -272,7 +321,7 @@ Page({
     wx.showNavigationBarLoading();
     if (this.data.userinfo.identity == '家长') {
       getLeaveParen(this);
-    } else if (this.data.userinfo.identity == '教师') {
+    } else if (this.data.userinfo.identity == '班主任') {
       var dataLeaveList = {
         'leavedates': '',
         'leavedatee': '',
@@ -323,7 +372,7 @@ Page({
             logs: []
           })
           getLeaveParen(this_);
-        } else if (this.data.userinfo.identity == '教师') {
+        } else if (this.data.userinfo.identity == '班主任') {
           pageNumber_a = 1;
           logs = [];
           this.setData({

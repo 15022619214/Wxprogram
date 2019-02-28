@@ -5,7 +5,7 @@
 <template is='searcStuhmodal' data='{{...searcStuhmodal,...gclist}}' />
 <view class='leftList'>
   <view class='leftinfo'>
-    <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
   </view>
   <view class='leftbtn {{onCk == 0?"active":""}}' bindtap='changeList' data-index='0'>
     <image src='../images/myinfo.png'></image>
@@ -13,20 +13,24 @@
   <view class='leftbtn {{onCk == 1?"active":""}}' bindtap='changeList' data-index='1' wx:if='{{userinfo.identity == "家长"}}'>
     <image src='../images/afl.png'></image>
   </view>
-  <view class='leftbtn {{onCk == 3?"active":""}}' bindtap='changeList' data-index='3' wx:if='{{userinfo.identity == "教师"}}'>
+  <view class='leftbtn {{onCk == 3?"active":""}}' bindtap='changeList' data-index='3' wx:if='{{userinfo.identity == "班主任"}}'>
     <image src='../images/adduser.png'></image>
   </view>
-  <view class='leftbtn {{onCk == 2?"active":""}}' bindtap='changeList' data-index='2' wx:if='{{userinfo.identity == "家长"||userinfo.identity == "教师"}}'>
+  <view class='leftbtn {{onCk == 2?"active":""}}' bindtap='changeList' data-index='2' wx:if='{{userinfo.identity == "家长"||userinfo.identity == "班主任"}}'>
     <image src='../images/logs.png'></image>
+  </view>
+  <view class='leftbtn {{onCk == 4?"active":""}}' bindtap='changeList' data-index='4' wx:if='{{userinfo.role.id == -1}}'>
+    <image src='../images/admins.png'></image>
   </view>
 </view>
 <view class='rightList'>
   <block wx:if='{{onCk == 0}}'>
     <view class='rightTop'>
       <text wx:if='{{userinfo.identity == "家长"}}'>家长信息</text>
-      <text wx:elif='{{userinfo.identity == "教师"}}'>教师信息</text>
+      <text wx:elif='{{userinfo.identity == "班主任"}}'>教师信息</text>
       <text wx:elif='{{userinfo.identity == "食堂职工"}}'>食堂职工信息</text>
-      <image src='../images/modify.png' bindtap='modify'></image>
+      <text wx:elif='{{userinfo.role.id == -1}}'>管理员信息</text>
+      <image src='../images/modify.png' bindtap='modify' wx:if='{{userinfo.role.id != -1}}'></image>
     </view>
     <view class='flexcontent'>
       <view class='flexchild_'>用户身份：
@@ -38,49 +42,59 @@
       <view class='flexchild'>联系电话：
         <text>{{userinfo.phone}}</text>
       </view>
-      <view class='flexchild' wx:if='{{userinfo.identity == "教师"}}'>职教年级：
+      <view class='flexchild' wx:if='{{userinfo.identity == "班主任"}}'>职教年级：
         <text>{{userinfo.teachgrade}}</text>
       </view>
-      <view class='flexchild' wx:if='{{userinfo.identity == "教师"}}'>职教班级：
+      <view class='flexchild' wx:if='{{userinfo.identity == "班主任"}}'>职教班级：
         <text>{{userinfo.teachclass}}</text>
       </view>
-      <view class='flexchild'>用户权限名称：
+      <view class='flexchild_'>用户权限名称：
         <text>{{userinfo.role.rolename}}</text>
       </view>
-      <view class='flexchild'>用户权限：
+      <view class='flexchild_'>用户权限：
         <text>{{userinfo.role.roleDescription}}</text>
       </view>
     </view>
     <view class='rightbottom'></view>
     <view class='rightTop_'>
       <text wx:if='{{userinfo.identity == "家长"}}'>学生信息</text>
-      <text wx:elif='{{userinfo.identity == "教师"}}'>学生列表</text>
-      <image src='../images/find.png' bindtap='findStuList' wx:if='{{userinfo.identity == "教师"}}'></image>
+      <text wx:elif='{{userinfo.identity == "班主任"}}'>学生列表</text>
+      <text wx:elif='{{userinfo.identity == "食堂职工"}}'>当日用餐人数</text>
+      <text wx:elif='{{userinfo.role.id == -1}}'>人员名单</text>
+      <image src='../images/find.png' bindtap='findStuList' wx:if='{{userinfo.identity == "班主任"}}'></image>
     </view>
-    <view class='topList'>
-      <view class='{{userinfo.identity == "教师"?"disinlineJS":"disinline"}}'>年级</view>
-      <view class='{{userinfo.identity == "教师"?"disinlineJS":"disinline"}}'>班级</view>
-      <view class='{{userinfo.identity == "教师"?"disinlineJS":"disinline"}}'>姓名</view>
-      <view class='{{userinfo.identity == "教师"?"disinlineJS":"disinline"}}'>学号</view>
-      <view class='{{userinfo.identity == "教师"?"disinlineJS":"disinline"}}' wx:if='{{userinfo.identity == "教师"}}'>操作</view>
-    </view>
-    <scroll-view class='rightList_' scroll-y="true" style='height:{{scrollheight}}px' bindscrolltolower='scorStubtn'>
-      <block wx:for='{{userinfoStu}}' wx:key=''>
-        <view class='listhome'>
-          <view class='{{userinfo.identity == "教师"?"homeinlineJS":"homeinline"}}'>{{item.stugrade}}</view>
-          <view class='{{userinfo.identity == "教师"?"homeinlineJS":"homeinline"}}'>{{item.stuclass}}</view>
-          <view class='{{userinfo.identity == "教师"?"homeinlineJS":"homeinline"}}'>{{item.stuname}}</view>
-          <view class='{{userinfo.identity == "教师"?"homeinlineJS":"homeinline"}}'>{{item.stunumber}}</view>
-          <view class='{{userinfo.identity == "教师"?"homeinlineJS":"homeinline"}}' wx:if='{{userinfo.identity == "教师"}}'>
-            <image src='../images/Look.png' id='lokimg' bindtap='lookover' data-stunumber='{{item.stunumber}}'></image>
+    <block wx:if='{{userinfo.identity == "家长"||userinfo.identity == "班主任"}}'>
+      <view class='topList'>
+        <view class='{{userinfo.identity == "班主任"?"disinlineJS":"disinline"}}'>年级</view>
+        <view class='{{userinfo.identity == "班主任"?"disinlineJS":"disinline"}}'>班级</view>
+        <view class='{{userinfo.identity == "班主任"?"disinlineJS":"disinline"}}'>姓名</view>
+        <view class='{{userinfo.identity == "班主任"?"disinlineJS":"disinline"}}'>学号</view>
+        <view class='{{userinfo.identity == "班主任"?"disinlineJS":"disinline"}}' wx:if='{{userinfo.identity == "班主任"}}'>操作</view>
+      </view>
+      <scroll-view class='rightList_' scroll-y="true" style='height:{{scrollheight}}px' bindscrolltolower='scorStubtn'>
+        <block wx:for='{{userinfoStu}}' wx:key=''>
+          <view class='listhome'>
+            <view class='{{userinfo.identity == "班主任"?"homeinlineJS":"homeinline"}}'>{{item.stugrade}}</view>
+            <view class='{{userinfo.identity == "班主任"?"homeinlineJS":"homeinline"}}'>{{item.stuclass}}</view>
+            <view class='{{userinfo.identity == "班主任"?"homeinlineJS":"homeinline"}}'>{{item.stuname}}</view>
+            <view class='{{userinfo.identity == "班主任"?"homeinlineJS":"homeinline"}}'>{{item.stunumber}}</view>
+            <view class='{{userinfo.identity == "班主任"?"homeinlineJS":"homeinline"}}' wx:if='{{userinfo.identity == "班主任"}}' bindtap='lookover' data-stunumber='{{item.stunumber}}'>
+              <image src='../images/Look.png' id='lokimg'></image>
+            </view>
           </view>
-        </view>
-      </block>
-    </scroll-view>
-    <view class='topList' wx:if='{{userinfo.identity == "教师"}}'>
-      <view class='disinlineJS_'>总人数：0</view>
-      <view class='disinlineJS_'>请假人数：0</view>
-      <view class='disinlineJS_'>实际人数：0</view>
+        </block>
+      </scroll-view>
+    </block>
+    <block wx:if='{{userinfo.identity == "食堂职工"}}'>
+      <view class='ringCoke'>
+        <view class='cokeFont'>当日用餐人数</view>
+        <view class='cokeFont_'>{{cokeNum}}人</view>
+      </view>
+    </block>
+    <view class='topList' wx:if='{{userinfo.identity == "班主任"}}'>
+      <view class='disinlineJS_'>总人数：{{allnum}}</view>
+      <view class='disinlineJS_'>请假人数：{{leavenums}}</view>
+      <view class='disinlineJS_'>实际人数：{{realnum}}</view>
     </view>
     <view class='bottomS'></view>
   </block>
@@ -141,7 +155,7 @@
   <block wx:elif='{{onCk == 2}}'>
     <view class='rightTop_'>
       <text>请假记录</text>
-      <image src='../images/find.png' bindtap='findStu' wx:if='{{userinfo.identity == "教师"}}'></image>
+      <image src='../images/find.png' bindtap='findStu' wx:if='{{userinfo.identity == "班主任"}}'></image>
     </view>
     <scroll-view class='rightList_' scroll-y="true" style='height:{{logheight}}px' bindscrolltolower='scorbtn'>
       <view class='logsyn' hidden='{{logsize}}'>----暂无请假记录----</view>
@@ -170,7 +184,7 @@
     </scroll-view>
   </block>
   <block wx:elif='{{onCk == 3}}'>
-    <view class='rightTop'>
+    <view class='rightTop_'>
       <text>学生信息[新增/修改]</text>
     </view>
     <form bindsubmit='addStu' class='forms'>
@@ -198,5 +212,10 @@
         保存
       </button>
     </form>
+  </block>
+  <block wx:elif='{{onCk == 4}}'>
+    <view class='rightTop_'>
+      <text>用户权限分配</text>
+    </view>
   </block>
 </view>

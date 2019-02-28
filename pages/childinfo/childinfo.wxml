@@ -6,17 +6,14 @@
     </view>
   </form>
   <view class='topList'>
-      <view class='disinline'>年级</view>
-      <view class='disinline'>班级</view>
-      <view class='disinline'>姓名</view>
-      <view class='disinline'>学号</view>
+    <view class='disinline'>年级</view>
+    <view class='disinline'>班级</view>
+    <view class='disinline'>姓名</view>
+    <view class='disinline'>学号</view>
   </view>
 </view>
 <block>
-  <view class='infolist'>
-    <view class='infoinline'>{{stuinfo.stugrade}}</view>
-    <view class='infoinline'>{{stuinfo.stuclass}}</view>
-    <view class='infoinline'>{{stuinfo.stuname}}</view>
-    <view class='infoinline'>{{stuinfo.stunumber}}</view>
+  <view class='container'>
+    <ch-canvas canvasId='ring' id='ring'></ch-canvas>
   </view>
 </block>

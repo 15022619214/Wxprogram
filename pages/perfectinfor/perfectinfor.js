@@ -13,7 +13,6 @@ var findByuserinfo = function(this_) {
       'Content-Type': 'application/json'
     },
     success: function(res) {
-      console.log(res.data)
       if (res.data != null) {
         if (res.data.identity == '家长') {
           this_.setData({
@@ -24,8 +23,7 @@ var findByuserinfo = function(this_) {
           for (var i = 0; i < res.data.pristudents.length; i++) {
             s_.push(res.data.pristudents[i].id);
           }
-          console.log(s_);
-        } else if (res.data.identity == '教师') {
+        } else if (res.data.identity == '班主任') {
           this_.setData({
             onCk: 1,
             item: res.data,
@@ -253,7 +251,6 @@ Page({
         'teachgrade': '',
         'teachclass': ''
       }
-      console.log(JSON.stringify(data_));
       wx.request({
         url: 'http://123.56.195.35/askforleave/admin/saveUser',
         method: 'GET',
@@ -309,13 +306,12 @@ Page({
         'username': app.globalData.userOpenId,
         'realname': name_,
         'phone': phone_,
-        'identity': '教师',
+        'identity': '班主任',
         'pristudents': '',
         'jobnumber': jobnumber_,
         'teachgrade': grade_,
         'teachclass': cleasses_
       }
-      console.log(JSON.stringify(data_));
       wx.request({
         url: 'http://123.56.195.35/askforleave/admin/saveUser',
         method: 'GET',
@@ -376,7 +372,6 @@ Page({
         'teachgrade': '',
         'teachclass': ''
       }
-      console.log(JSON.stringify(data_));
       wx.request({
         url: 'http://123.56.195.35/askforleave/admin/saveUser',
         method: 'GET',

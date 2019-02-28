@@ -46,9 +46,11 @@ App({
               if (this.userInfoReadyCallback) {
                 this.userInfoReadyCallback(res)
               }
+              setTimeout(function () {
                 wx.reLaunch({
                   url: '../home/home'
                 })
+              }, 2000)
             }
           })
         }

@@ -87,7 +87,7 @@
   font-size: 24rpx;
   letter-spacing: 20rpx;
   font-weight: bold;
-  margin-bottom: 60rpx;
+  margin-bottom: 20rpx;
 }
 
 .rightTop text {
@@ -128,7 +128,7 @@
 
 .rightbottom {
   width: 100%;
-  height: 60rpx;
+  height: 20rpx;
 }
 
 .titletxt {
@@ -258,6 +258,9 @@
   line-height: 60rpx;
   font-size: 24rpx;
   letter-spacing: 4rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .topList_ {
@@ -352,4 +355,22 @@
   float: left;
   margin-right: 10rpx;
   margin-left: 10rpx;
+}
+
+.ringCoke{
+  margin: 60rpx auto;
+  width: 500rpx;
+  height: 500rpx;
+  border: 40rpx solid #c60;
+  border-radius: 300rpx;
+  text-align: center;
+}
+
+.cokeFont{
+  line-height: 190rpx;
+  font-size: 24rpx;
+}
+
+.cokeFont_{
+  font-size: 100rpx;
 }

@@ -2,7 +2,7 @@
 <template is='findinfo' data='{{...modalinfo}}'/>
 <view class='topList'>
     <view class='disinline {{onCk == 0 ? "active":""}}' bindtap='changeList' data-index='0'>家长</view>
-    <view class='disinline {{onCk == 1 ? "active":""}}' bindtap='changeList' data-index='1'>教师</view>
+    <view class='disinline {{onCk == 1 ? "active":""}}' bindtap='changeList' data-index='1'>班主任</view>
     <view class='disinline {{onCk == 2 ? "active":""}}' bindtap='changeList' data-index='2'>食堂职工</view>
 </view>
 <form bindsubmit='userinfofrom' class='forms'>
