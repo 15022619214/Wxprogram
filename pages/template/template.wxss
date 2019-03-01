@@ -69,6 +69,16 @@
   border-radius: 10rpx;
 }
 
+.showTost{
+  width: 95%;
+  height: 200rpx;
+  line-height: 200rpx;
+  text-align: center;
+  font-size: 24rpx;
+  letter-spacing: 4rpx;
+  font-weight: bold
+}
+
 .modal_footer {
   border-top: 2rpx solid #eee;
   text-align: center;

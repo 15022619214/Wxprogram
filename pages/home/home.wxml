@@ -6,6 +6,7 @@
 <template is='userinfor' data='{{...userinfor}}' />
 <template is='searchuser' data='{{...searchuser}}' />
 <template is='modifyRole' data='{{...modifyRole}}' />
+<template is='showTost' data='{{...showTost}}' />
 <view class='leftList'>
   <view class='leftinfo'>
     <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>

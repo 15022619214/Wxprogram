@@ -1,10 +1,31 @@
-<template name="userInfo">
-  <modal hidden="{{hidden}}" title="{{infos}}" confirm-text="知道了" bindconfirm="confirm" no-cancel="true">
-  </modal>
+<template name="userTost">
+  <view hidden='{{hidden}}'>
+    <view class='modal_mask'></view>
+    <view class='modal_content_3'>
+      <view class='modal_title'>提示</view>
+      <view class='radiohei'>
+        {{infos}}
+      </view>
+      <view class='modal_footer' bindtap='confirm'>
+        知道了
+      </view>
+    </view>
+  </view>
 </template>
+
 <template name="reginfo">
-  <modal hidden="{{hidden}}" title="{{infos}}" confirm-text="前去完善信息" bindconfirm="confirm" no-cancel="true">
-  </modal>
+  <view hidden='{{hidden}}'>
+    <view class='modal_mask'></view>
+    <view class='modal_content_3'>
+      <view class='modal_title'>提示</view>
+      <view class='radiohei'>
+        {{infos}}
+      </view>
+      <view class='modal_footer' bindtap='confirm'>
+        前去完善信息
+      </view>
+    </view>
+  </view>
 </template>
 
 <template name="findinfo">
@@ -239,7 +260,7 @@
       <view class='radiohei'>
         <radio-group class="radio-group" bindchange="radiorole">
           <label class="radio" wx:for="{{items}}" wx:key=''>
-            <radio value="{{item.id}}" checked="{{item.checked}}" color='#c60' style='margin-left:20rpx;'/> {{item.value}}
+            <radio value="{{item.id}}" checked="{{item.checked}}" color='#c60' style='margin-left:20rpx;' /> {{item.value}}
           </label>
         </radio-group>
       </view>
@@ -247,6 +268,16 @@
         <view bindtap='giveRole' class='mbtn'>赋予权限</view>
         <view bindtap='closemodal' class='cbtn'>关闭</view>
       </view>
+    </view>
+  </view>
+</template>
+
+<template name="showTost">
+  <view hidden='{{hidden}}'>
+    <view class='modal_mask'></view>
+    <view class='modal_content_3'>
+      <view class='modal_title'>提示</view>
+      <view class='showTost'>您被赋予使用权限，请稍后</view>
     </view>
   </view>
 </template>

@@ -16,8 +16,6 @@ var findByuserinfo = function(this_) {
       'Content-Type': 'application/json'
     },
     success: function(res) {
-      console.log(res.data.role.id, '权限ID')
-      var roleID = res.data.role.id;
       if (res.data == null) {
         this_.setData({
           modalinfo: {
@@ -26,25 +24,34 @@ var findByuserinfo = function(this_) {
           }
         })
       } else {
-        this_.setData({
-          userinfo: res.data,
-          userinfoStu: res.data.pristudents
-        })
-        if (res.data.role.id == 2) {
-          teachgrade = res.data.teachgrade;
-          teachclass = res.data.teachclass;
-          var dataPrisList = {
-            'stuname': '',
-            'stunumber': '',
-            'stugrade': teachgrade,
-            'stuclass': teachclass
+        var roleID = res.data.role.id;
+        if (res.data.role.id == 0) {
+          this_.setData({
+            showTost: {
+              hidden: false
+            }
+          })
+        } else {
+          this_.setData({
+            userinfo: res.data,
+            userinfoStu: res.data.pristudents
+          })
+          if (res.data.role.id == 2) {
+            teachgrade = res.data.teachgrade;
+            teachclass = res.data.teachclass;
+            var dataPrisList = {
+              'stuname': '',
+              'stunumber': '',
+              'stugrade': teachgrade,
+              'stuclass': teachclass
+            }
+            getPrisList(this_, dataPrisList);
+            getLeavenumteach(this_);
+          } else if (res.data.role.id == 1) {
+            getLeveNum(this_);
+          } else if (res.data.role.id == -1) {
+            getLeveNum(this_);
           }
-          getPrisList(this_, dataPrisList);
-          getLeavenumteach(this_);
-        } else if (res.data.role.id == 1) {
-          getLeveNum(this_);
-        } else if (res.data.role.id == -1) {
-          getLeveNum(this_);
         }
       }
       wx.hideNavigationBarLoading();
@@ -250,6 +257,9 @@ Page({
     gclist: {
       gradeR: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
       classesR: ['一班', '二班', '三班', '四班', '五班', '六班'],
+    },
+    showTost: {
+      hidden: true
     },
     searcStuhmodal: {
       modalsactive: '',
