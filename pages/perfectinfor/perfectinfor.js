@@ -14,7 +14,7 @@ var findByuserinfo = function(this_) {
     },
     success: function(res) {
       if (res.data != null) {
-        if (res.data.identity == '家长') {
+        if (res.data.role.id == 3) {
           this_.setData({
             onCk: 0,
             pageinfo: res.data.pristudents,
@@ -23,14 +23,14 @@ var findByuserinfo = function(this_) {
           for (var i = 0; i < res.data.pristudents.length; i++) {
             s_.push(res.data.pristudents[i].id);
           }
-        } else if (res.data.identity == '班主任') {
+        } else if (res.data.role.id == 2) {
           this_.setData({
             onCk: 1,
             item: res.data,
             gradeV: res.data.teachgrade,
             classesV: res.data.teachclass
           })
-        } else if (res.data.identity == '食堂职工') {
+        } else if (res.data.role.id == 1) {
           this_.setData({
             onCk: 2,
             item: res.data

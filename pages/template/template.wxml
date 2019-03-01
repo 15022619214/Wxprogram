@@ -157,3 +157,96 @@
     </form>
   </view>
 </template>
+
+<template name="userinfor">
+  <view hidden='{{hidden}}'>
+    <view class='modal_mask'></view>
+    <view class='modal_content_2'>
+      <view class='modal_title'>人员信息</view>
+      <view class='stumodal_'>
+        <view class='modainline'>姓名：
+          <text>{{infors.realname}}</text>
+        </view>
+        <view class='modainline'>身份：
+          <text>{{infors.identity}}</text>
+        </view>
+        <view class='modainline'>工号：
+          <text>{{infors.jobnumber}}</text>
+        </view>
+        <view class='modainline'>电话：
+          <text>{{infors.phone}}</text>
+        </view>
+        <block wx:if='{{infors.role.id == 2}}'>
+          <view class='modainline'>职教年级：
+            <text>{{infors.teachgrade}}</text>
+          </view>
+          <view class='modainline'>职教班级：
+            <text>{{infors.teachclass}}</text>
+          </view>
+        </block>
+        <view class='modainline_'>用户权限名称：
+          <text>{{infors.role.rolename}}</text>
+        </view>
+        <view class='modainline_'>用户权限：
+          <text>{{infors.role.roleDescription}}</text>
+        </view>
+      </view>
+      <view class='modal_footer' bindtap='closemodal'>
+        关闭
+      </view>
+    </view>
+  </view>
+</template>
+
+<template name='searchuser'>
+  <view class='modal_masks {{modalsactive}}'></view>
+  <view class='serachUlog {{modalsactive}}'>
+    <view class='modal_titles'>
+      <text>查找人员</text>
+      <image src='../images/right.png' bindtap='rightbtnUser'></image>
+    </view>
+    <form bindsubmit="serachUs" bindreset='restUs'>
+      <view class='logflex'>
+        <view class='loginline'>
+          <text style='float:left;line-height:60rpx;' space='emsp'>姓名: </text>
+          <input name="realname" style='float:left' type='text' value='{{realname}}'></input>
+        </view>
+        <view class='loginline'>
+          <text style='float:left;line-height:60rpx;' space='emsp'>工号: </text>
+          <input name="jobnumber" style='float:left' type='number' value='{{jobnumber}}'></input>
+        </view>
+        <view class='loginline'>
+          <text style='float:left;line-height:60rpx;' space='emsp'>手机号: </text>
+          <input name="phone" style='float:left' type='number' value='{{phone}}'></input>
+        </view>
+        <view class='loginline'></view>
+        <view class='loginline'>
+          <button form-type='reset' type='default' class='btnserah'>重置</button>
+        </view>
+        <view class='loginline'>
+          <button form-type='submit' type='warn' class='btnserah'>查询</button>
+        </view>
+      </view>
+    </form>
+  </view>
+</template>
+
+<template name="modifyRole">
+  <view hidden='{{hidden}}'>
+    <view class='modal_mask'></view>
+    <view class='modal_content_3'>
+      <view class='modal_title'>选择权限</view>
+      <view class='radiohei'>
+        <radio-group class="radio-group" bindchange="radiorole">
+          <label class="radio" wx:for="{{items}}" wx:key=''>
+            <radio value="{{item.id}}" checked="{{item.checked}}" color='#c60' style='margin-left:20rpx;'/> {{item.value}}
+          </label>
+        </radio-group>
+      </view>
+      <view class='modal_footer'>
+        <view bindtap='giveRole' class='mbtn'>赋予权限</view>
+        <view bindtap='closemodal' class='cbtn'>关闭</view>
+      </view>
+    </view>
+  </view>
+</template>

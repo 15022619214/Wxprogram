@@ -29,7 +29,7 @@ text{
   z-index: 1;
   letter-spacing: 20rpx;
   border-radius: 0rpx;
-  font-size: 30rpx;
+  font-size: 24rpx;
 }
 
 .putsty{
@@ -70,7 +70,7 @@ input{
 
 .active{
   font-weight: bold;
-  border-bottom:4rpx solid #d81e06
+  border-bottom:4rpx solid #c60
 }
 
 .List{

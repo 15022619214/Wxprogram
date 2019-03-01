@@ -2,6 +2,9 @@
 const app = getApp();
 var teachgrade = null;
 var teachclass = null;
+var identity = '班主任';
+var ids = [];
+var roleiden = '';
 var findByuserinfo = function(this_) {
   wx.request({
     url: 'http://123.56.195.35/askforleave/admin/getUserByopenid',
@@ -13,7 +16,7 @@ var findByuserinfo = function(this_) {
       'Content-Type': 'application/json'
     },
     success: function(res) {
-      console.log(res.data.role.id,'权限ID')
+      console.log(res.data.role.id, '权限ID')
       var roleID = res.data.role.id;
       if (res.data == null) {
         this_.setData({
@@ -27,7 +30,7 @@ var findByuserinfo = function(this_) {
           userinfo: res.data,
           userinfoStu: res.data.pristudents
         })
-        if (res.data.identity == '班主任') {
+        if (res.data.role.id == 2) {
           teachgrade = res.data.teachgrade;
           teachclass = res.data.teachclass;
           var dataPrisList = {
@@ -38,7 +41,9 @@ var findByuserinfo = function(this_) {
           }
           getPrisList(this_, dataPrisList);
           getLeavenumteach(this_);
-        } else if (res.data.identity == '食堂职工') {
+        } else if (res.data.role.id == 1) {
+          getLeveNum(this_);
+        } else if (res.data.role.id == -1) {
           getLeveNum(this_);
         }
       }
@@ -185,6 +190,31 @@ var getLeavenumteach = function(this_) {
     }
   })
 }
+
+var getUserList = function(this_, data) {
+  wx.request({
+    url: 'http://123.56.195.35/askforleave/admin/getUserList',
+    method: 'GET',
+    data: {
+      'params': JSON.stringify(data),
+    },
+    header: {
+      'Content-Type': 'application/json'
+    },
+    success: function(res) {
+      console.log(res.data)
+      if (res.data != null) {
+        for (var i = 0; i < res.data.length; i++) {
+          res.data[i].ischecked = false
+        }
+        this_.setData({
+          userlist: res.data
+        })
+      }
+      wx.hideNavigationBarLoading();
+    }
+  })
+}
 Page({
 
   /**
@@ -192,8 +222,9 @@ Page({
    */
   data: {
     identity: '',
-    userInfo: {},
+    userInfo: [],
     logs: [],
+    userlist: [],
     modalinfo: {
       hidden: true,
       infos: ''
@@ -209,6 +240,13 @@ Page({
       leavedates: '',
       leavedatee: ''
     },
+    searchuser: {
+      modalsactive: '',
+    },
+    userinfor: {
+      hidden: true,
+      infors: []
+    },
     gclist: {
       gradeR: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
       classesR: ['一班', '二班', '三班', '四班', '五班', '六班'],
@@ -220,10 +258,16 @@ Page({
       grade: '',
       classes: ''
     },
+    modifyRole: {
+      hidden: true,
+      items: []
+    },
+    onCkadmin: 0,
     onCk: 0,
     autoheight: 0,
     scrollheight: 0,
     logheight: 0,
+    roleheight: 0,
     userinfo: [],
     userinfoStu: [],
     dateS: '2018-01-01',
@@ -240,7 +284,8 @@ Page({
     cokeNum: 0,
     allnum: 0,
     leavenums: 0,
-    realnum: 0
+    realnum: 0,
+    selectAll: false
   },
   /**
    * 生命周期函数--监听页面加载
@@ -276,7 +321,8 @@ Page({
         this_.setData({
           autoheight: res.windowHeight,
           scrollheight: res.windowHeight - 340,
-          logheight: res.windowHeight - 40
+          logheight: res.windowHeight - 40,
+          roleheight: res.windowHeight - 145
         })
       }
     });
@@ -316,12 +362,34 @@ Page({
   onShareAppMessage: function() {
 
   },
-
+  admincg: function(e) {
+    wx.showNavigationBarLoading();
+    var index = e.currentTarget.dataset.index;
+    this.setData({
+      onCkadmin: e.currentTarget.dataset.index
+    })
+    if (index == 0) {
+      identity = '班主任';
+    } else if (index == 1) {
+      identity = '食堂职工';
+    }
+    this.setData({
+      userlist: [],
+      selectAll: false
+    })
+    var dataUserList = {
+      'realname': '',
+      'phone': '',
+      'identity': identity,
+      'jobnumber': ''
+    }
+    getUserList(this, dataUserList);
+  },
   scorbtn: function() {
     wx.showNavigationBarLoading();
-    if (this.data.userinfo.identity == '家长') {
+    if (this.data.userinfo.role.id == 3) {
       getLeaveParen(this);
-    } else if (this.data.userinfo.identity == '班主任') {
+    } else if (this.data.userinfo.role.id == 2) {
       var dataLeaveList = {
         'leavedates': '',
         'leavedatee': '',
@@ -342,6 +410,16 @@ Page({
     }
     getPrisList(this, dataPrisList)
   },
+  scorUserbtn: function() {
+    wx.showNavigationBarLoading();
+    var dataUserList = {
+      'realname': '',
+      'phone': '',
+      'identity': identity,
+      'jobnumber': ''
+    }
+    getUserList(this, dataUserList);
+  },
   confirm: function() {
     wx.reLaunch({
       url: '../perfectinfor/perfectinfor'
@@ -359,20 +437,22 @@ Page({
         pageNumber_ = 1;
         userinfoStu = [];
         this.setData({
-          userinfoStu: []
+          userinfoStu: [],
+          userlist: [],
+          onCkadmin: 0
         })
         findByuserinfo(this_);
         break;
       case '2':
         wx.showNavigationBarLoading();
-        if (this.data.userinfo.identity == '家长') {
+        if (this.data.userinfo.role.id == 3) {
           pageNumber = 1;
           logs = [];
           this.setData({
             logs: []
           })
           getLeaveParen(this_);
-        } else if (this.data.userinfo.identity == '班主任') {
+        } else if (this.data.userinfo.role.id == 2) {
           pageNumber_a = 1;
           logs = [];
           this.setData({
@@ -397,6 +477,19 @@ Page({
             classes: teachclass
           }
         })
+        break;
+      case '4':
+        wx.showNavigationBarLoading();
+        this.setData({
+          userlist: []
+        })
+        var dataUserList = {
+          'realname': '',
+          'phone': '',
+          'identity': identity,
+          'jobnumber': ''
+        }
+        getUserList(this, dataUserList);
         break;
     }
   },
@@ -468,15 +561,50 @@ Page({
       }
     })
   },
+  lookUser: function(e) {
+    var this_ = this;
+    wx.request({
+      url: 'http://123.56.195.35/askforleave/admin/getUserByopenid',
+      method: 'GET',
+      data: {
+        'username': e.currentTarget.dataset.username
+      },
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function(res) {
+        this_.setData({
+          userinfor: {
+            hidden: false,
+            infors: res.data
+          }
+        })
+      }
+    })
+  },
   closemodal: function() {
     this.setData({
       priinfor: {
         hidden: true
+      },
+      userinfor: {
+        hidden: true
+      },
+      modifyRole: {
+        hidden: true,
+        items: [{
+            id: '1',
+            value: '班主任'
+          },
+          {
+            id: '2',
+            value: '餐厅管理人员'
+          },
+        ]
       }
     })
   },
   modifymodal: function(e) {
-    console.log(e.currentTarget.dataset.infors);
     this.setData({
       priinfor: {
         hidden: true
@@ -504,6 +632,13 @@ Page({
       }
     })
   },
+  findUser: function() {
+    this.setData({
+      searchuser: {
+        modalsactive: 'modalsactive'
+      }
+    })
+  },
   rightbtn: function() {
     this.setData({
       searchinfor: {
@@ -518,6 +653,13 @@ Page({
   rightbtnStu: function() {
     this.setData({
       searcStuhmodal: {
+        modalsactive: ''
+      }
+    })
+  },
+  rightbtnUser: function() {
+    this.setData({
+      searchuser: {
         modalsactive: ''
       }
     })
@@ -679,6 +821,120 @@ Page({
             }
           })
         }
+      }
+    })
+  },
+  serachUs: function(e) {
+    this.setData({
+      searchuser: {
+        modalsactive: '',
+      },
+      userlist: [],
+      selectAll: false
+    })
+    var dataUserList = {
+      'realname': e.detail.value.realname,
+      'phone': e.detail.value.phone,
+      'identity': identity,
+      'jobnumber': e.detail.value.jobnumber
+    }
+    getUserList(this, dataUserList);
+  },
+  restUs: function(e) {
+    this.setData({
+      searchuser: {
+        modalsactive: '',
+      },
+      userlist: [],
+      selectAll: false
+    })
+    var dataUserList = {
+      'realname': '',
+      'phone': '',
+      'identity': identity,
+      'jobnumber': ''
+    }
+    getUserList(this, dataUserList);
+  },
+  chkRole: function(e) {
+    ids = e.detail.value;
+  },
+  selectAll: function(e) {
+    ids = [];
+    this.data.selectAll = !this.data.selectAll;
+    for (var i = 0; i < this.data.userlist.length; i++) {
+      this.data.userlist[i].ischecked = this.data.selectAll;
+      if (this.data.selectAll) {
+        ids.push(this.data.userlist[i].id + '')
+      }
+    }
+    this.setData({
+      userlist: this.data.userlist
+    })
+  },
+  radiorole: function(e) {
+    roleiden = e.detail.value;
+  },
+  showRole: function() {
+    if (ids.length == 0) {
+      wx.showToast({
+        title: '请选择用户',
+        icon: 'none'
+      })
+      return;
+    }
+    this.setData({
+      modifyRole: {
+        hidden: false,
+        items: [{
+            id: '2',
+            value: '班主任'
+          },
+          {
+            id: '1',
+            value: '餐厅管理人员'
+          },
+        ]
+      }
+    })
+  },
+  giveRole: function() {
+    this.setData({
+      modifyRole: {
+        hidden: true
+      }
+    })
+    console.log(ids)
+    var datarole = {
+      'ids': ids,
+      'roleid': roleiden
+    }
+    var this_ = this;
+    wx.request({
+      url: 'http://123.56.195.35/askforleave/admin/saveallUserrole',
+      method: 'GET',
+      data: {
+        'params': JSON.stringify(datarole)
+      },
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function(res) {
+        wx.showNavigationBarLoading();
+        wx.showToast({
+          title: '赋予成功',
+          icon: 'none'
+        })
+        this_.setData({
+          userlist: []
+        })
+        var dataUserList = {
+          'realname': '',
+          'phone': '',
+          'identity': identity,
+          'jobnumber': ''
+        }
+        getUserList(this_, dataUserList);
       }
     })
   }

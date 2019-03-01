@@ -39,6 +39,36 @@
   border-radius: 10rpx;
 }
 
+.modal_content_2 {
+  position: fixed;
+  width: 600rpx;
+  height: 500rpx;
+  overflow: hidden;
+  background: #fafafa;
+  z-index: 1001;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 10rpx;
+}
+
+.modal_content_3 {
+  position: fixed;
+  width: 600rpx;
+  height: 300rpx;
+  overflow: hidden;
+  background: #fafafa;
+  z-index: 1001;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 10rpx;
+}
+
 .modal_footer {
   border-top: 2rpx solid #eee;
   text-align: center;
@@ -154,6 +184,16 @@
   margin: 0rpx auto;
 }
 
+.stumodal_{
+  width: 95%;
+  height: 350rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: 0rpx auto;
+}
+
 .modainline {
   width: 50%;
   height: 70rpx;
@@ -249,4 +289,13 @@
 .cbtn {
   width: 49%;
   float: left;
+}
+
+.radiohei{
+  width: 95%;
+  margin: 0rpx auto;
+  height: 145rpx;
+  font-size: 24rpx;
+  text-align: center;
+  line-height: 145rpx
 }
