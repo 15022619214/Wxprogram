@@ -48,7 +48,7 @@
         </view>
       </view>
       <view class='infolist_'>
-        <view class='infolist' bindtap='getStuinfo' data-stuinfo='{{stuinfo}}'>
+        <view class='infolist'>
           <view class='infoinline'>{{stuinfo.stugrade}}</view>
           <view class='infoinline'>{{stuinfo.stuclass}}</view>
           <view class='infoinline'>{{stuinfo.stuname}}</view>
@@ -56,7 +56,8 @@
         </view>
       </view>
       <view class='modal_footer' bindtap='closemodal'>
-        关闭
+        <view bindtap='closemodal' class='cbtn'>关闭</view>
+        <view bindtap='getStuinfo' class='mbtn' data-stuinfo='{{stuinfo}}'>确定</view>
       </view>
     </view>
   </view>

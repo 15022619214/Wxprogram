@@ -129,17 +129,17 @@ Page({
   onShareAppMessage: function() {
 
   },
-  bindgrade: function (e) {
+  bindgrade: function(e) {
     this.setData({
       gradeV: this.data.grade[e.detail.value]
     })
   },
-  bindclass: function (e) {
+  bindclass: function(e) {
     this.setData({
       classesV: this.data.classes[e.detail.value]
     })
   },
-  changeList: function (e) {
+  changeList: function(e) {
     g_ = [];
     s_ = [];
     this.setData({
@@ -154,7 +154,7 @@ Page({
       pageinfo: g_
     })
   },
-  getChildinfo: function () {
+  getChildinfo: function() {
     this.setData({
       modalinfo: {
         hidden: false,
@@ -162,14 +162,14 @@ Page({
       }
     })
   },
-  closemodal: function () {
+  closemodal: function() {
     this.setData({
       modalinfo: {
         hidden: true
       }
     })
   },
-  serachform: function (e) {
+  serachform: function(e) {
     var this_ = this;
     wx.request({
       url: 'http://123.56.195.35/askforleave/admin/getPristudsBystunum',
@@ -180,7 +180,7 @@ Page({
       header: {
         'Content-Type': 'application/json'
       },
-      success: function (res) {
+      success: function(res) {
         this_.setData({
           modalinfo: {
             stuinfo: res.data
@@ -189,9 +189,14 @@ Page({
       }
     })
   },
-  getStuinfo: function (e) {
+  getStuinfo: function(e) {
     g_.push(e.currentTarget.dataset.stuinfo);
-    s_.push(e.currentTarget.dataset.stuinfo.id);
+    s_.push(e.currentTarget.dataset.stuinfo.id);    
+    for (var i = 0; i < g_.length; i++) {
+      if (g_[i].id == e.currentTarget.dataset.stuinfo.id) {
+        g_.splice(g_[i].id,1);
+      }
+    }
     this.setData({
       modalinfo: {
         hidden: true
@@ -199,14 +204,14 @@ Page({
       pageinfo: g_
     })
   },
-  clearinfo: function () {
+  clearinfo: function() {
     g_ = [];
     s_ = [];
     this.setData({
       pageinfo: g_
     })
   },
-  userinfofrom: function (e) {
+  userinfofrom: function(e) {
     var name_ = e.detail.value.name;
     var phone_ = e.detail.value.phone;
     var jobnumber_ = e.detail.value.jobnumber;
@@ -260,7 +265,7 @@ Page({
         header: {
           'Content-Type': 'application/json'
         },
-        success: function (res) {
+        success: function(res) {
           if (res.data.info == 'add') {
             wx.reLaunch({
               url: '../home/home'
@@ -321,7 +326,7 @@ Page({
         header: {
           'Content-Type': 'application/json'
         },
-        success: function (res) {
+        success: function(res) {
           if (res.data.info == 'add') {
             wx.reLaunch({
               url: '../home/home'
@@ -381,7 +386,7 @@ Page({
         header: {
           'Content-Type': 'application/json'
         },
-        success: function (res) {
+        success: function(res) {
           if (res.data.info == 'add') {
             wx.reLaunch({
               url: '../home/home'
