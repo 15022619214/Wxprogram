@@ -186,7 +186,7 @@
 
 .stumodal {
   width: 95%;
-  height: 145rpx;
+  height: 290rpx;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -242,6 +242,18 @@
 .serachUlog {
   width: 84%;
   height: 430rpx;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #fff;
+  z-index: 1001;
+  transform: translateX(100%);
+  transition: all 0.4s;
+}
+
+.serachUlog_ {
+  width: 84%;
+  height: 335rpx;
   position: fixed;
   top: 0;
   right: 0;

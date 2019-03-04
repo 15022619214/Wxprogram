@@ -68,21 +68,22 @@
     <view class='modal_mask'></view>
     <view class='modal_content_1'>
       <view class='modal_title'>学生信息</view>
-      <view class='stumodal'>
-        <view class='modainline'>学生姓名：
+      <scroll-view scroll-y="true" class='stumodal'>
+      <view class='modainline_'>学生序列号：
+          <text>{{infors.stucode}}</text>
+        </view>
+        <view class='modainline_'>学生姓名：
           <text>{{infors.stuname}}</text>
         </view>
-        <view class='modainline'>学生学号：
+        <view class='modainline_'>学生学号：
           <text>{{infors.stunumber}}</text>
         </view>
-        <view class='modainline'>年级：
+        <view class='modainline_'>年级：
           <text>{{infors.stugrade}}</text>
         </view>
-        <view class='modainline'>班级：
+        <view class='modainline_'>班级：
           <text>{{infors.stuclass}}</text>
         </view>
-      </view>
-      <view class='stumodal'>
         <block wx:for='{{infors.parents}}' wx:key=''>
           <view class='modainline_'>监护人姓名：
             <text>{{item.realname}}</text>
@@ -91,7 +92,7 @@
             <text>{{item.phone}}</text>
           </view>
         </block>
-      </view>
+      </scroll-view>
       <view class='modal_footer'>
         <view bindtap='modifymodal' class='mbtn' data-infors='{{infors}}'>修改</view>
         <view bindtap='closemodal' class='cbtn'>关闭</view>
@@ -280,5 +281,32 @@
       <view class='modal_title'>提示</view>
       <view class='showTost'>您被赋予使用权限，请稍后</view>
     </view>
+  </view>
+</template>
+
+<template name='searchmonth'>
+  <view class='modal_masks {{modalsactive}}'></view>
+  <view class='serachUlog_ {{modalsactive}}'>
+    <view class='modal_titles'>
+      <text>月份筛选</text>
+      <image src='../images/right.png' bindtap='rightbtnMonth'></image>
+    </view>
+    <form bindsubmit="serachUmon" bindreset='restUmon'>
+      <view class='logflex'>
+        <view class='loginline'>
+          <picker mode="date" bindchange="datebtnMonth" fields='month'>
+            <text style='float:left;line-height:60rpx;' space='emsp'>日期: </text>
+            <input name="selectMonth" style='float:left' type='text' value='{{selectMonth}}' disabled='true'></input>
+          </picker>
+        </view>
+        <view class='loginline'></view>
+        <view class='loginline'>
+          <button form-type='reset' type='default' class='btnserah'>重置</button>
+        </view>
+        <view class='loginline'>
+          <button form-type='submit' type='warn' class='btnserah'>查询</button>
+        </view>
+      </view>
+    </form>
   </view>
 </template>

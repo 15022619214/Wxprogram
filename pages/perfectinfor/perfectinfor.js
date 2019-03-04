@@ -4,7 +4,7 @@ var s_ = [];
 const app = getApp()
 var findByuserinfo = function(this_) {
   wx.request({
-    url: 'http://123.56.195.35/askforleave/admin/getUserByopenid',
+    url: app.globalData.appUrl +'askforleave/admin/getUserByopenid',
     method: 'GET',
     data: {
       'username': app.globalData.userOpenId
@@ -172,7 +172,7 @@ Page({
   serachform: function(e) {
     var this_ = this;
     wx.request({
-      url: 'http://123.56.195.35/askforleave/admin/getPristudsBystunum',
+      url: app.globalData.appUrl +'askforleave/admin/getPristudsBystunum',
       method: 'GET',
       data: {
         'stunumber': e.detail.value.childinfo
@@ -257,7 +257,7 @@ Page({
         'teachclass': ''
       }
       wx.request({
-        url: 'http://123.56.195.35/askforleave/admin/saveUser',
+        url: app.globalData.appUrl +'askforleave/admin/saveUser',
         method: 'GET',
         data: {
           'params': JSON.stringify(data_)
@@ -318,7 +318,7 @@ Page({
         'teachclass': cleasses_
       }
       wx.request({
-        url: 'http://123.56.195.35/askforleave/admin/saveUser',
+        url: app.globalData.appUrl +'askforleave/admin/saveUser',
         method: 'GET',
         data: {
           'params': JSON.stringify(data_)
@@ -378,7 +378,7 @@ Page({
         'teachclass': ''
       }
       wx.request({
-        url: 'http://123.56.195.35/askforleave/admin/saveUser',
+        url: app.globalData.appUrl +'askforleave/admin/saveUser',
         method: 'GET',
         data: {
           'params': JSON.stringify(data_)

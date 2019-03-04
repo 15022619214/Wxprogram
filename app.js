@@ -2,7 +2,8 @@
 App({
   globalData: {
     userInfo: null,
-    userOpenId: null
+    userOpenId: null,
+    appUrl:'http://123.56.195.35/'
   },
   onLaunch: function () {
     // 展示本地存储能力
@@ -16,7 +17,7 @@ App({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         wx.request({
-          url: 'http://123.56.195.35/askforleave/getapi/getopenidnew',
+          url: this_.globalData.appUrl +'askforleave/getapi/getopenidnew',
           method:'GET',
           data:{
             'code': res.code

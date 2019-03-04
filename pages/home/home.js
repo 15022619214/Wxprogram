@@ -1,5 +1,6 @@
 // pages/home/home.js
 const app = getApp();
+const util = require('../../utils/util.js');
 var teachgrade = null;
 var teachclass = null;
 var identity = '班主任';
@@ -7,7 +8,7 @@ var ids = [];
 var roleiden = '';
 var findByuserinfo = function(this_) {
   wx.request({
-    url: 'http://123.56.195.35/askforleave/admin/getUserByopenid',
+    url: app.globalData.appUrl + 'askforleave/admin/getUserByopenid',
     method: 'GET',
     data: {
       'username': app.globalData.userOpenId
@@ -16,6 +17,7 @@ var findByuserinfo = function(this_) {
       'Content-Type': 'application/json'
     },
     success: function(res) {
+      console.log(res.data)
       if (res.data == null) {
         this_.setData({
           modalinfo: {
@@ -64,7 +66,7 @@ var pageNumber_a = 1;
 var logs = [];
 var getLeaveParen = function(this_) {
   wx.request({
-    url: 'http://123.56.195.35/askforleave/leave/getLeavelogParent',
+    url: app.globalData.appUrl + 'askforleave/leave/getLeavelogParent',
     method: 'GET',
     data: {
       'username': app.globalData.userOpenId,
@@ -99,7 +101,7 @@ var getLeaveParen = function(this_) {
 
 var getLeavelogList = function(this_, data) {
   wx.request({
-    url: 'http://123.56.195.35/askforleave/leave/getLeavelogList',
+    url: app.globalData.appUrl + 'askforleave/leave/getLeavelogList',
     method: 'GET',
     data: {
       'params': JSON.stringify(data),
@@ -136,7 +138,7 @@ var pageNumber_ = 1;
 var userinfoStu = [];
 var getPrisList = function(this_, data) {
   wx.request({
-    url: 'http://123.56.195.35/askforleave/admin/getPristuList',
+    url: app.globalData.appUrl + 'askforleave/admin/getPristuList',
     method: 'GET',
     data: {
       'params': JSON.stringify(data),
@@ -165,7 +167,7 @@ var getPrisList = function(this_, data) {
 }
 var getLeveNum = function(this_) {
   wx.request({
-    url: 'http://123.56.195.35/askforleave/leave/getLeavenum',
+    url: app.globalData.appUrl + 'askforleave/leave/getLeavenum',
     method: 'GET',
     header: {
       'Content-Type': 'application/json'
@@ -180,7 +182,7 @@ var getLeveNum = function(this_) {
 
 var getLeavenumteach = function(this_) {
   wx.request({
-    url: 'http://123.56.195.35/askforleave/leave/getLeavenumteach',
+    url: app.globalData.appUrl + 'askforleave/leave/getLeavenumteach',
     method: 'GET',
     data: {
       'username': app.globalData.userOpenId
@@ -200,7 +202,7 @@ var getLeavenumteach = function(this_) {
 
 var getUserList = function(this_, data) {
   wx.request({
-    url: 'http://123.56.195.35/askforleave/admin/getUserList',
+    url: app.globalData.appUrl + 'askforleave/admin/getUserList',
     method: 'GET',
     data: {
       'params': JSON.stringify(data),
@@ -222,6 +224,34 @@ var getUserList = function(this_, data) {
     }
   })
 }
+
+var leavelogsmonth = function(this_, month) {
+  wx.request({
+    url: app.globalData.appUrl + 'askforleave/leave/leavelogsmonth',
+    method: 'GET',
+    data: {
+      'username': app.globalData.userOpenId,
+      'month': month
+    },
+    header: {
+      'Content-Type': 'application/json'
+    },
+    success: function(res) {
+      console.log(res.data);
+      if (res.data.length > 0) {
+        this_.setData({
+          stumonth: res.data,
+          logmonth: true
+        })
+      } else {
+        this_.setData({
+          logmonth: false
+        })
+      }
+      wx.hideNavigationBarLoading();
+    }
+  })
+}
 Page({
 
   /**
@@ -232,6 +262,7 @@ Page({
     userInfo: [],
     logs: [],
     userlist: [],
+    stumonth: [],
     modalinfo: {
       hidden: true,
       infos: ''
@@ -268,6 +299,10 @@ Page({
       grade: '',
       classes: ''
     },
+    searchmonth: {
+      modalsactive: '',
+      selectMonth: ''
+    },
     modifyRole: {
       hidden: true,
       items: []
@@ -280,11 +315,12 @@ Page({
     roleheight: 0,
     userinfo: [],
     userinfoStu: [],
-    dateS: '2018-01-01',
-    dateM: '2018-01-01',
+    dateS: util.formatTime_yyyMMdd(new Date()),
+    dateM: util.formatTime_yyyMMdd(new Date()),
     childid: 0,
     start: '',
     logsize: false,
+    logmonth: false,
     savestu: {
       stuname: '',
       stunumber: '',
@@ -501,6 +537,13 @@ Page({
         }
         getUserList(this, dataUserList);
         break;
+      case '5':
+        wx.showNavigationBarLoading();
+        this.setData({
+          stumonth: []
+        })
+        leavelogsmonth(this, '');
+        break;
     }
   },
   radioChange: function(e) {
@@ -529,7 +572,7 @@ Page({
       'leavereason': e.detail.value.textarea
     }
     wx.request({
-      url: 'http://123.56.195.35/askforleave/leave/saveLeavelogs',
+      url: app.globalData.appUrl + 'askforleave/leave/saveLeavelogs',
       method: 'GET',
       data: {
         'params': JSON.stringify(data)
@@ -538,10 +581,17 @@ Page({
         'Content-Type': 'application/json'
       },
       success: function(res) {
-        wx.showToast({
-          title: '申请成功',
-          icon: 'none'
-        })
+        if (res.data.istc == 'ok') {
+          wx.showToast({
+            title: '申请成功，已退餐',
+            icon: 'none'
+          })
+        } else if (res.data.istc == 'no') {
+          wx.showToast({
+            title: '申请成功，当日退餐时间已过',
+            icon: 'none'
+          })
+        }
       }
     })
   },
@@ -553,7 +603,7 @@ Page({
   lookover: function(e) {
     var this_ = this;
     wx.request({
-      url: 'http://123.56.195.35/askforleave/admin/getPristudsBystunum',
+      url: app.globalData.appUrl + 'askforleave/admin/getPristudsBystunum',
       method: 'GET',
       data: {
         'stunumber': e.currentTarget.dataset.stunumber
@@ -562,6 +612,7 @@ Page({
         'Content-Type': 'application/json'
       },
       success: function(res) {
+        console.log(res)
         this_.setData({
           priinfor: {
             hidden: false,
@@ -574,7 +625,7 @@ Page({
   lookUser: function(e) {
     var this_ = this;
     wx.request({
-      url: 'http://123.56.195.35/askforleave/admin/getUserByopenid',
+      url: app.globalData.appUrl + 'askforleave/admin/getUserByopenid',
       method: 'GET',
       data: {
         'username': e.currentTarget.dataset.username
@@ -649,6 +700,13 @@ Page({
       }
     })
   },
+  findMonth: function() {
+    this.setData({
+      searchmonth: {
+        modalsactive: 'modalsactive'
+      }
+    })
+  },
   rightbtn: function() {
     this.setData({
       searchinfor: {
@@ -670,6 +728,13 @@ Page({
   rightbtnUser: function() {
     this.setData({
       searchuser: {
+        modalsactive: ''
+      }
+    })
+  },
+  rightbtnMonth: function() {
+    this.setData({
+      searchmonth: {
         modalsactive: ''
       }
     })
@@ -721,6 +786,14 @@ Page({
     this.setData({
       searchinfor: {
         leavedatee: e.detail.value
+      }
+    })
+  },
+  datebtnMonth: function(e) {
+    console.log(e);
+    this.setData({
+      searchmonth: {
+        selectMonth: e.detail.value
       }
     })
   },
@@ -795,7 +868,7 @@ Page({
       'stuclass': e.detail.value.classes
     }
     wx.request({
-      url: 'http://123.56.195.35/askforleave/admin/savePristuds',
+      url: app.globalData.appUrl + 'askforleave/admin/savePristuds',
       method: 'GET',
       data: {
         'params': JSON.stringify(dataSave)
@@ -804,9 +877,10 @@ Page({
         'Content-Type': 'application/json'
       },
       success: function(res) {
+        console.log(res.data)
         if (res.data.info == 'add') {
           wx.showToast({
-            title: '保存成功',
+            title: '保存成功,该生序列号为：' + res.data.scode,
             icon: 'none'
           })
           this_.setData({
@@ -833,6 +907,25 @@ Page({
         }
       }
     })
+  },
+  serachUmon: function(e) {
+    console.log(e.detail.value.selectMonth);
+    this.setData({
+      searchmonth: {
+        modalsactive: ''
+      },
+      stumonth: []
+    })
+    leavelogsmonth(this, e.detail.value.selectMonth)
+  },
+  restUmon: function(e) {
+    this.setData({
+      searchmonth: {
+        modalsactive: ''
+      },
+      stumonth: []
+    })
+    leavelogsmonth(this, '')
   },
   serachUs: function(e) {
     this.setData({
@@ -921,7 +1014,7 @@ Page({
     }
     var this_ = this;
     wx.request({
-      url: 'http://123.56.195.35/askforleave/admin/saveallUserrole',
+      url: app.globalData.appUrl + 'askforleave/admin/saveallUserrole',
       method: 'GET',
       data: {
         'params': JSON.stringify(datarole)
