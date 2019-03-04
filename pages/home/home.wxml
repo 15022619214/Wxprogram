@@ -23,6 +23,9 @@
   <view class='leftbtn {{onCk == 2?"active":""}}' bindtap='changeList' data-index='2' wx:if='{{userinfo.role.id == 3||userinfo.role.id == 2}}'>
     <image src='../images/logs.png'></image>
   </view>
+  <view class='leftbtn {{onCk == 5?"active":""}}' bindtap='changeList' data-index='5' wx:if='{{userinfo.role.id == 2}}'>
+    <image src='../images/excel.png'></image>
+  </view>
   <view class='leftbtn {{onCk == 4?"active":""}}' bindtap='changeList' data-index='4' wx:if='{{userinfo.role.id == -1}}'>
     <image src='../images/admins.png'></image>
   </view>
@@ -257,5 +260,12 @@
       </view>
       <view class='adminline_' bindtap='showRole'>赋予权限</view>
     </view>
+  </block>
+  <block wx:elif='{{onCk == 5}}'>
+    <view class='rightTop_'>
+      <text>月底统计表</text>
+      <image src='../images/find.png' bindtap='findUser'></image>
+    </view>
+    
   </block>
 </view>

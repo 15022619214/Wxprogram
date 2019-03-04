@@ -36,7 +36,7 @@
       <view class='serachtemplate'>
         <form bindsubmit="serachform">
           <view class='serachflex'>
-            <input type='number' placeholder='输入学生学号进行搜索' confirm-type="search" class='inpsty' name='childinfo' value='{{inpval}}'></input>
+            <input type='number' placeholder='输入序列号进行搜索' confirm-type="search" class='inpsty' name='childinfo' value='{{inpval}}'></input>
             <button type='warn' form-type='submit' size='mini'>搜索</button>
           </view>
         </form>
