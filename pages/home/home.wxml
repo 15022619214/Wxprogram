@@ -272,7 +272,7 @@
       <view class='disinline_3line'>姓名</view>
       <view class='disinline_3line'>请假天数</view>
     </view>
-    <scroll-view class='rightList_' scroll-y="true" style='height:{{roleheight}}px'>
+    <scroll-view class='rightList_' scroll-y="true" style='height:{{excelheight}}px'>
       <view class='logsyn' hidden='{{logmonth}}'>----暂无记录----</view>
       <block wx:for='{{stumonth}}' wx:key=''>
         <view class='listhome'>
@@ -282,5 +282,8 @@
         </view>
       </block>
     </scroll-view>
+    <view class='topList_btn_' bindtap='download'>
+      导出
+    </view>
   </block>
 </view>

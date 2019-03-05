@@ -314,6 +314,19 @@
   border-bottom: 2rpx solid #eee;
 }
 
+.topList_btn_ {
+  width: 100%;
+  height: 80rpx;
+  background-color: #d81e06;
+  border-top: 2rpx solid #eee;
+  border-bottom: 2rpx solid #eee;
+  font-size: 24rpx;
+  line-height: 80rpx;
+  text-align: center;
+  color:#fff;
+  letter-spacing: 20rpx;
+}
+
 .disinline_ {
   display: inline-block;
   width: 20%;
@@ -387,7 +400,7 @@
   margin-top: 5rpx;
   border-radius: 20rpx;
   border-top: 10rpx solid #c60;
-  border-bottom: 4rpx solid #222;
+  border-bottom: 2rpx solid #222;
   margin-bottom: 5rpx;
 }
 

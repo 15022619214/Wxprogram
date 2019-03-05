@@ -4,11 +4,12 @@ const util = require('../../utils/util.js');
 var teachgrade = null;
 var teachclass = null;
 var identity = '班主任';
+var month = '';
 var ids = [];
 var roleiden = '';
 var findByuserinfo = function(this_) {
   wx.request({
-    url: app.globalData.appUrl + 'askforleave/admin/getUserByopenid',
+    url: app.globalData.appUrl + 'admin/getUserByopenid',
     method: 'GET',
     data: {
       'username': app.globalData.userOpenId
@@ -66,7 +67,7 @@ var pageNumber_a = 1;
 var logs = [];
 var getLeaveParen = function(this_) {
   wx.request({
-    url: app.globalData.appUrl + 'askforleave/leave/getLeavelogParent',
+    url: app.globalData.appUrl + 'leave/getLeavelogParent',
     method: 'GET',
     data: {
       'username': app.globalData.userOpenId,
@@ -101,7 +102,7 @@ var getLeaveParen = function(this_) {
 
 var getLeavelogList = function(this_, data) {
   wx.request({
-    url: app.globalData.appUrl + 'askforleave/leave/getLeavelogList',
+    url: app.globalData.appUrl + 'leave/getLeavelogList',
     method: 'GET',
     data: {
       'params': JSON.stringify(data),
@@ -138,7 +139,7 @@ var pageNumber_ = 1;
 var userinfoStu = [];
 var getPrisList = function(this_, data) {
   wx.request({
-    url: app.globalData.appUrl + 'askforleave/admin/getPristuList',
+    url: app.globalData.appUrl + 'admin/getPristuList',
     method: 'GET',
     data: {
       'params': JSON.stringify(data),
@@ -167,7 +168,7 @@ var getPrisList = function(this_, data) {
 }
 var getLeveNum = function(this_) {
   wx.request({
-    url: app.globalData.appUrl + 'askforleave/leave/getLeavenum',
+    url: app.globalData.appUrl + 'leave/getLeavenum',
     method: 'GET',
     header: {
       'Content-Type': 'application/json'
@@ -182,7 +183,7 @@ var getLeveNum = function(this_) {
 
 var getLeavenumteach = function(this_) {
   wx.request({
-    url: app.globalData.appUrl + 'askforleave/leave/getLeavenumteach',
+    url: app.globalData.appUrl + 'leave/getLeavenumteach',
     method: 'GET',
     data: {
       'username': app.globalData.userOpenId
@@ -202,7 +203,7 @@ var getLeavenumteach = function(this_) {
 
 var getUserList = function(this_, data) {
   wx.request({
-    url: app.globalData.appUrl + 'askforleave/admin/getUserList',
+    url: app.globalData.appUrl + 'admin/getUserList',
     method: 'GET',
     data: {
       'params': JSON.stringify(data),
@@ -227,7 +228,7 @@ var getUserList = function(this_, data) {
 
 var leavelogsmonth = function(this_, month) {
   wx.request({
-    url: app.globalData.appUrl + 'askforleave/leave/leavelogsmonth',
+    url: app.globalData.appUrl + 'leave/leavelogsmonth',
     method: 'GET',
     data: {
       'username': app.globalData.userOpenId,
@@ -313,6 +314,7 @@ Page({
     scrollheight: 0,
     logheight: 0,
     roleheight: 0,
+    excelheight: 0,
     userinfo: [],
     userinfoStu: [],
     dateS: util.formatTime_yyyMMdd(new Date()),
@@ -331,7 +333,8 @@ Page({
     allnum: 0,
     leavenums: 0,
     realnum: 0,
-    selectAll: false
+    selectAll: false,
+    downloadfile: 0
   },
   /**
    * 生命周期函数--监听页面加载
@@ -368,7 +371,8 @@ Page({
           autoheight: res.windowHeight,
           scrollheight: res.windowHeight - 340,
           logheight: res.windowHeight - 40,
-          roleheight: res.windowHeight - 145
+          roleheight: res.windowHeight - 145,
+          excelheight: res.windowHeight - 113
         })
       }
     });
@@ -572,7 +576,7 @@ Page({
       'leavereason': e.detail.value.textarea
     }
     wx.request({
-      url: app.globalData.appUrl + 'askforleave/leave/saveLeavelogs',
+      url: app.globalData.appUrl + 'leave/saveLeavelogs',
       method: 'GET',
       data: {
         'params': JSON.stringify(data)
@@ -603,7 +607,7 @@ Page({
   lookover: function(e) {
     var this_ = this;
     wx.request({
-      url: app.globalData.appUrl + 'askforleave/admin/getPristudsBystunum',
+      url: app.globalData.appUrl + 'admin/getPristudsBystunum',
       method: 'GET',
       data: {
         'stunumber': e.currentTarget.dataset.stunumber
@@ -625,7 +629,7 @@ Page({
   lookUser: function(e) {
     var this_ = this;
     wx.request({
-      url: app.globalData.appUrl + 'askforleave/admin/getUserByopenid',
+      url: app.globalData.appUrl + 'admin/getUserByopenid',
       method: 'GET',
       data: {
         'username': e.currentTarget.dataset.username
@@ -790,7 +794,6 @@ Page({
     })
   },
   datebtnMonth: function(e) {
-    console.log(e);
     this.setData({
       searchmonth: {
         selectMonth: e.detail.value
@@ -868,7 +871,7 @@ Page({
       'stuclass': e.detail.value.classes
     }
     wx.request({
-      url: app.globalData.appUrl + 'askforleave/admin/savePristuds',
+      url: app.globalData.appUrl + 'admin/savePristuds',
       method: 'GET',
       data: {
         'params': JSON.stringify(dataSave)
@@ -916,6 +919,7 @@ Page({
       },
       stumonth: []
     })
+    month = e.detail.value.selectMonth;
     leavelogsmonth(this, e.detail.value.selectMonth)
   },
   restUmon: function(e) {
@@ -925,6 +929,7 @@ Page({
       },
       stumonth: []
     })
+    month = null;
     leavelogsmonth(this, '')
   },
   serachUs: function(e) {
@@ -1014,7 +1019,7 @@ Page({
     }
     var this_ = this;
     wx.request({
-      url: app.globalData.appUrl + 'askforleave/admin/saveallUserrole',
+      url: app.globalData.appUrl + 'admin/saveallUserrole',
       method: 'GET',
       data: {
         'params': JSON.stringify(datarole)
@@ -1039,6 +1044,39 @@ Page({
         }
         getUserList(this_, dataUserList);
       }
+    })
+  },
+  download: function() {
+    console.log(month);
+    const downloadTask = wx.downloadFile({
+      url: 'http://example.com/somefile.pdf', // 仅为示例，并非真实的资源
+      success(res) {
+        wx.saveFile({
+          tempFilePath: res.tempFilePath,
+          success: function(res) {
+            var savedFilePath = res.savedFilePath
+            wx.getSavedFileList({
+              success(res) {
+                console.log(res.fileList)
+                console.log(res.fileList["0"].filePath);
+                if (res.fileList.length > 0) {
+                  wx.removeSavedFile({
+                    filePath: res.fileList["0"].filePath,
+                  })
+                }
+              }
+            })
+          }
+        })
+      }
+    })
+    downloadTask.onProgressUpdate((res) => {
+      this.setData({
+        downloadfile: res.progress
+      })
+      console.log('下载进度', res.progress)
+      console.log('已经下载的数据长度', res.totalBytesWritten)
+      console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
     })
   }
 
