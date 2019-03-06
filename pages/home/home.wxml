@@ -114,10 +114,10 @@
     </view>
     <view class='topList_'>
       <view class='disinline_'>选择</view>
-      <view class='disinline_'>学号</view>
       <view class='disinline_'>年级</view>
       <view class='disinline_'>班级</view>
       <view class='disinline_'>姓名</view>
+      <view class='disinline_'>学号</view>
     </view>
     <scroll-view class='rightList_A' scroll-y="true">
       <radio-group bindchange="radioChange">
