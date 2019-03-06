@@ -366,9 +366,9 @@ Page({
       success: function(res) {
         this_.setData({
           autoheight: res.windowHeight,
-          scrollheight: res.windowHeight - 340,
+          scrollheight: res.windowHeight - 369,
           logheight: res.windowHeight - 40,
-          roleheight: res.windowHeight - 145,
+          roleheight: res.windowHeight - 154,
           excelheight: res.windowHeight - 113
         })
       }
@@ -565,6 +565,20 @@ Page({
     })
   },
   leaveSubmit: function(e) {
+    if (this.data.childid == '') {
+      wx.showToast({
+        title: '请选择一个学生',
+        icon: 'none'
+      })
+      return;
+    }
+    if (e.detail.value.textarea == '') {
+      wx.showToast({
+        title: '请填写请假原因',
+        icon: 'none'
+      })
+      return;
+    }
     var data = {
       'username': app.globalData.userOpenId,
       'stuid': this.data.childid,
@@ -590,6 +604,11 @@ Page({
         } else if (res.data.istc == 'no') {
           wx.showToast({
             title: '申请成功，当日退餐时间已过',
+            icon: 'none'
+          })
+        } else if (res.data.info == 'err'){
+          wx.showToast({
+            title: '请勿重复申请',
             icon: 'none'
           })
         }

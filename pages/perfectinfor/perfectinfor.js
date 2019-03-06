@@ -63,8 +63,10 @@ Page({
     vals: '',
     grade: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
     classes: ['一班', '二班', '三班', '四班', '五班', '六班'],
+    relation: ['父亲', '母亲'],
     gradeV: '一年级',
     classesV: '一班',
+    relationV: '父亲',
     item: {
       realname: '',
       jobnumber: '',
@@ -138,6 +140,11 @@ Page({
       classesV: this.data.classes[e.detail.value]
     })
   },
+  bindrela: function(e) {
+    this.setData({
+      relationV: this.data.relation[e.detail.value]
+    })
+  },
   changeList: function(e) {
     g_ = [];
     s_ = [];
@@ -194,6 +201,7 @@ Page({
     for (var i = 0; i < g_.length; i++) {
       if (g_[i].id == e.currentTarget.dataset.stuinfo.id) {
         g_.splice(g_[i].id, 1);
+        s_.splice(g_[i].id, 1);
       }
     }
     this.setData({
@@ -216,6 +224,7 @@ Page({
     var jobnumber_ = e.detail.value.jobnumber;
     var grade_ = e.detail.value.grade;
     var cleasses_ = e.detail.value.classes;
+    var relation_ = e.detail.value.relation;
     var obileReg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
     if (this.data.onCk == 0) {
       if (name_ == '') {
@@ -253,7 +262,8 @@ Page({
         'pristudents': s_.toString(),
         'jobnumber': '',
         'teachgrade': '',
-        'teachclass': ''
+        'teachclass': '',
+        'relationship': relation_
       }
       wx.request({
         url: app.globalData.appUrl + 'admin/saveUser',
@@ -314,7 +324,8 @@ Page({
         'pristudents': '',
         'jobnumber': jobnumber_,
         'teachgrade': grade_,
-        'teachclass': cleasses_
+        'teachclass': cleasses_,
+        'relationship': ''
       }
       wx.request({
         url: app.globalData.appUrl + 'admin/saveUser',
@@ -374,7 +385,8 @@ Page({
         'pristudents': '',
         'jobnumber': jobnumber_,
         'teachgrade': '',
-        'teachclass': ''
+        'teachclass': '',
+        'relationship': ''
       }
       wx.request({
         url: app.globalData.appUrl + 'admin/saveUser',

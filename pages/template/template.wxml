@@ -86,7 +86,7 @@
         </view>
         <block wx:for='{{infors.parents}}' wx:key=''>
           <view class='modainline_'>监护人姓名：
-            <text>{{item.realname}}</text>
+            <text>{{item.realname}}[{{item.relationship}}]</text>
           </view>
           <view class='modainline_'>监护人联系电话：
             <text>{{item.phone}}</text>

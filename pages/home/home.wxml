@@ -41,8 +41,11 @@
       <image src='../images/modify.png' bindtap='modify' wx:if='{{userinfo.role.id != -1}}'></image>
     </view>
     <view class='flexcontent'>
-      <view class='flexchild_'>用户身份：
+      <view class='flexchild'>用户身份：
         <text>{{userinfo.identity}}</text>
+      </view>
+      <view class='flexchild' wx:if='{{userinfo.role.id == 3}}'>与学生关系：
+        <text>{{userinfo.relationship}}</text>
       </view>
       <view class='flexchild'>姓名：
         <text>{{userinfo.realname}}</text>
@@ -92,7 +95,7 @@
         </block>
       </scroll-view>
     </block>
-    <view class='topList' wx:if='{{userinfo.role.id == 2}}'>
+    <view class='topList_bottom' wx:if='{{userinfo.role.id == 2}}'>
       <view class='disinlineJS_'>总人数：{{allnum}}</view>
       <view class='disinlineJS_'>退餐人数：{{leavenums}}</view>
       <view class='disinlineJS_'>用餐人数：{{realnum}}</view>
@@ -171,6 +174,9 @@
           <view class='flexcontent'>
             <view class='flexchild_A'>申请日期：
               <text>{{item.applydate}}</text>
+            </view>
+            <view class='flexchild_A'>申请家属：
+              <text>{{item.relationship}}</text>
             </view>
             <view class='flexchild_A'>请假学生姓名：
               <text>{{item.stuname}}</text>
@@ -271,6 +277,7 @@
       <view class='disinline_3line'>学号</view>
       <view class='disinline_3line'>姓名</view>
       <view class='disinline_3line'>请假天数</view>
+      <view class='disinline_3line'>退餐天数</view>
     </view>
     <scroll-view class='rightList_' scroll-y="true" style='height:{{excelheight}}px'>
       <view class='logsyn' hidden='{{logmonth}}'>----暂无记录----</view>
@@ -279,6 +286,7 @@
           <view class='disinline_3line_'>{{item.stunumber}}</view>
           <view class='disinline_3line_'>{{item.stuname}}</view>
           <view class='disinline_3line_'>{{item.count}}天</view>
+          <view class='disinline_3line_'>{{item.tccount}}天</view>
         </view>
       </block>
     </scroll-view>

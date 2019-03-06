@@ -19,6 +19,13 @@
    <text style='float:left;line-height:70rpx;' space='emsp' wx:elif='{{onCk == 2}}'>职工工号: </text> 
    <input name="jobnumber" style='float:left;margin-top:10rpx' type='number' value='{{item.jobnumber}}'></input>
   </view>
+  <picker bindchange="bindrela" range="{{relation}}"  wx:if='{{onCk == 0}}'>
+    <view class='putsty'>
+      <image src='../images/TX.png'></image>
+      <text style='float:left;line-height:70rpx;' space='emsp'>与学生关系: </text> 
+      <input name="relation" style='float:left;margin-top:10rpx' type='text' value='{{relationV}}' disabled='true'></input>
+    </view>
+  </picker>
   <picker bindchange="bindgrade" range="{{grade}}"  wx:if='{{onCk == 1}}'>
     <view class='putsty'>
       <image src='../images/TX.png'></image>
