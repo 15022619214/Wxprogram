@@ -282,8 +282,8 @@
         </view>
       </block>
     </scroll-view>
-    <view class='topList_btn_' bindtap='download'>
+    <!-- <view class='topList_btn_' bindtap='download'>
       导出
-    </view>
+    </view> -->
   </block>
 </view>

@@ -18,7 +18,6 @@ var findByuserinfo = function(this_) {
       'Content-Type': 'application/json'
     },
     success: function(res) {
-      console.log(res.data)
       if (res.data == null) {
         this_.setData({
           modalinfo: {
@@ -212,7 +211,6 @@ var getUserList = function(this_, data) {
       'Content-Type': 'application/json'
     },
     success: function(res) {
-      console.log(res.data)
       if (res.data != null) {
         for (var i = 0; i < res.data.length; i++) {
           res.data[i].ischecked = false
@@ -238,7 +236,6 @@ var leavelogsmonth = function(this_, month) {
       'Content-Type': 'application/json'
     },
     success: function(res) {
-      console.log(res.data);
       if (res.data.length > 0) {
         this_.setData({
           stumonth: res.data,
@@ -616,7 +613,6 @@ Page({
         'Content-Type': 'application/json'
       },
       success: function(res) {
-        console.log(res)
         this_.setData({
           priinfor: {
             hidden: false,
@@ -880,7 +876,6 @@ Page({
         'Content-Type': 'application/json'
       },
       success: function(res) {
-        console.log(res.data)
         if (res.data.info == 'add') {
           wx.showToast({
             title: '保存成功,该生序列号为：' + res.data.scode,
@@ -912,7 +907,6 @@ Page({
     })
   },
   serachUmon: function(e) {
-    console.log(e.detail.value.selectMonth);
     this.setData({
       searchmonth: {
         modalsactive: ''
@@ -1012,7 +1006,6 @@ Page({
         hidden: true
       }
     })
-    console.log(ids)
     var datarole = {
       'ids': ids,
       'roleid': roleiden
@@ -1048,35 +1041,58 @@ Page({
   },
   download: function() {
     console.log(month);
-    const downloadTask = wx.downloadFile({
-      url: 'http://example.com/somefile.pdf', // 仅为示例，并非真实的资源
-      success(res) {
-        wx.saveFile({
-          tempFilePath: res.tempFilePath,
-          success: function(res) {
-            var savedFilePath = res.savedFilePath
-            wx.getSavedFileList({
-              success(res) {
-                console.log(res.fileList)
-                console.log(res.fileList["0"].filePath);
-                if (res.fileList.length > 0) {
-                  wx.removeSavedFile({
-                    filePath: res.fileList["0"].filePath,
-                  })
-                }
+    wx.request({
+      url: app.globalData.appUrl + 'leave/leavelogsmonthout',
+      method: 'GET',
+      data: {
+        'username': app.globalData.userOpenId,
+        'month': month
+      },
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function(res) {
+        console.log(app.globalData.appUrl + res.data.path);
+        const downloadTask = wx.downloadFile({
+          url: app.globalData.appUrl + res.data.path,
+          success(res) {
+            wx.saveFile({
+              tempFilePath: res.tempFilePath,
+              success: function(res) {
+                var savedFilePath = res.savedFilePath;
+                console.log(savedFilePath);
+                wx.openDocument({
+                  filePath: savedFilePath,
+                  fileType: 'xls',
+                  success(res) {
+                    console.log('打开文档成功')
+                  }
+                })
+                wx.getSavedFileList({
+                  success(res) {
+                    console.log(res.fileList)
+                    console.log(res.fileList["0"].filePath);
+                    if (res.fileList.length > 0) {
+                      wx.removeSavedFile({
+                        filePath: res.fileList["0"].filePath,
+                      })
+                    }
+                  }
+                })
               }
             })
+
           }
         })
+        downloadTask.onProgressUpdate((res) => {
+          // this.setData({
+          //   downloadfile: res.progress
+          // })
+          console.log('下载进度', res.progress)
+          console.log('已经下载的数据长度', res.totalBytesWritten)
+          console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
+        })
       }
-    })
-    downloadTask.onProgressUpdate((res) => {
-      this.setData({
-        downloadfile: res.progress
-      })
-      console.log('下载进度', res.progress)
-      console.log('已经下载的数据长度', res.totalBytesWritten)
-      console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
     })
   }
 

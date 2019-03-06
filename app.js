@@ -3,7 +3,7 @@ App({
   globalData: {
     userInfo: null,
     userOpenId: null,
-    appUrl:'http://qjd.tjfirstcloud.com/'
+    appUrl:'https://qjd.tjfirstcloud.com/'
   },
   onLaunch: function () {
     // 展示本地存储能力
