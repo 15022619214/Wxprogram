@@ -4,7 +4,7 @@ var s_ = [];
 const app = getApp()
 var findByuserinfo = function(this_) {
   wx.request({
-    url: app.globalData.appUrl +'admin/getUserByopenid',
+    url: app.globalData.appUrl + 'admin/getUserByopenid',
     method: 'GET',
     data: {
       'username': app.globalData.userOpenId
@@ -76,9 +76,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var this_ = this;
-    findByuserinfo(this_);
-    wx.showNavigationBarLoading();
+
   },
 
   /**
@@ -92,7 +90,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    wx.showNavigationBarLoading();
+    findByuserinfo(this);
   },
 
   /**
@@ -172,7 +171,7 @@ Page({
   serachform: function(e) {
     var this_ = this;
     wx.request({
-      url: app.globalData.appUrl +'admin/getPristudsBystunum',
+      url: app.globalData.appUrl + 'admin/getPristudsBystunum',
       method: 'GET',
       data: {
         'stunumber': e.detail.value.childinfo
@@ -191,10 +190,10 @@ Page({
   },
   getStuinfo: function(e) {
     g_.push(e.currentTarget.dataset.stuinfo);
-    s_.push(e.currentTarget.dataset.stuinfo.id);    
+    s_.push(e.currentTarget.dataset.stuinfo.id);
     for (var i = 0; i < g_.length; i++) {
       if (g_[i].id == e.currentTarget.dataset.stuinfo.id) {
-        g_.splice(g_[i].id,1);
+        g_.splice(g_[i].id, 1);
       }
     }
     this.setData({
@@ -257,7 +256,7 @@ Page({
         'teachclass': ''
       }
       wx.request({
-        url: app.globalData.appUrl +'admin/saveUser',
+        url: app.globalData.appUrl + 'admin/saveUser',
         method: 'GET',
         data: {
           'params': JSON.stringify(data_)
@@ -318,7 +317,7 @@ Page({
         'teachclass': cleasses_
       }
       wx.request({
-        url: app.globalData.appUrl +'admin/saveUser',
+        url: app.globalData.appUrl + 'admin/saveUser',
         method: 'GET',
         data: {
           'params': JSON.stringify(data_)
@@ -378,7 +377,7 @@ Page({
         'teachclass': ''
       }
       wx.request({
-        url: app.globalData.appUrl +'admin/saveUser',
+        url: app.globalData.appUrl + 'admin/saveUser',
         method: 'GET',
         data: {
           'params': JSON.stringify(data_)
