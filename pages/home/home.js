@@ -88,11 +88,7 @@ var getLeaveParen = function(this_) {
             logsize: true
           })
           pageNumber++;
-        } else {
-          this_.setData({
-            logsize: false
-          })
-        }
+        } 
       }
       wx.hideNavigationBarLoading();
     }
@@ -123,10 +119,6 @@ var getLeavelogList = function(this_, data) {
             logsize: true
           })
           pageNumber_a++;
-        } else {
-          this_.setData({
-            logsize: false
-          })
         }
       }
       wx.hideNavigationBarLoading();
@@ -240,10 +232,6 @@ var leavelogsmonth = function(this_, month) {
         this_.setData({
           stumonth: res.data,
           logmonth: true
-        })
-      } else {
-        this_.setData({
-          logmonth: false
         })
       }
       wx.hideNavigationBarLoading();
