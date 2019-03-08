@@ -1,7 +1,7 @@
 // pages/home/home.js
 const app = getApp();
 const util = require('../../utils/util.js');
-var teachgrade = null;
+var teachgrade = null;    
 var teachclass = null;
 var identity = '班主任';
 var month = '';
