@@ -238,6 +238,19 @@ var leavelogsmonth = function(this_, month) {
     }
   })
 }
+
+var datePk = function(this_){
+
+  var time = util.formatTime_HHmmss(new Date());
+  var date = new Date('2013-08-30 07:40');
+  var time_ = util.formatTime_HHmmss(date);
+
+  // if (time > time_){
+  //   this_.setData({
+  //     showBtn: true
+  //   })
+  // }
+}
 Page({
 
   /**
@@ -304,6 +317,8 @@ Page({
     userinfoStu: [],
     dateS: util.formatTime_yyyMMdd(new Date()),
     dateM: util.formatTime_yyyMMdd(new Date()),
+    timeS: util.formatTime_HHmmss(new Date()),
+    timeM: util.formatTime_HHmmss(new Date()),
     childid: 0,
     start: '',
     logsize: false,
@@ -319,7 +334,8 @@ Page({
     leavenums: 0,
     realnum: 0,
     selectAll: false,
-    downloadfile: 0
+    downloadfile: 0,
+    showBtn:false
   },
   /**
    * 生命周期函数--监听页面加载
@@ -339,6 +355,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+    datePk(this);
     wx.showNavigationBarLoading();
     pageNumber_ = 1;
     userinfoStu = [];
@@ -552,6 +569,16 @@ Page({
       dateM: e.detail.value
     })
   },
+  bindTimeS: function (e) {
+    this.setData({
+      timeS: e.detail.value,
+    })
+  },
+  bindTimeM: function (e) {
+    this.setData({
+      timeM: e.detail.value
+    })
+  },
   leaveSubmit: function(e) {
     if (this.data.childid == '') {
       wx.showToast({
@@ -572,7 +599,10 @@ Page({
       'stuid': this.data.childid,
       'leavedates': this.data.dateS,
       'leavedatee': this.data.dateM,
-      'leavereason': e.detail.value.textarea
+      'leavedatesm': this.data.timeS,
+      'leavedateem': this.data.timeM,
+      'leavereason': e.detail.value.textarea,
+      'leavereasonone': '0'
     }
     wx.request({
       url: app.globalData.appUrl + 'leave/saveLeavelogs',
@@ -595,6 +625,53 @@ Page({
             icon: 'none'
           })
         } else if (res.data.info == 'err'){
+          wx.showToast({
+            title: '请勿重复申请',
+            icon: 'none'
+          })
+        }
+      }
+    })
+  },
+  leaveSubmitTime: function (e) {
+    if (this.data.childid == '') {
+      wx.showToast({
+        title: '请选择一个学生',
+        icon: 'none'
+      })
+      return;
+    }
+    var data = {
+      'username': app.globalData.userOpenId,
+      'stuid': this.data.childid,
+      'leavedates': '',
+      'leavedatee': '',
+      'leavedatesm': '',
+      'leavedateem': '',
+      'leavereason': '',
+      'leavereasonone': '1'
+    }
+    wx.request({
+      url: app.globalData.appUrl + 'leave/saveLeavelogs',
+      method: 'GET',
+      data: {
+        'params': JSON.stringify(data)
+      },
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        if (res.data.istc == 'ok') {
+          wx.showToast({
+            title: '申请成功，已退餐',
+            icon: 'none'
+          })
+        } else if (res.data.istc == 'no') {
+          wx.showToast({
+            title: '申请成功，当日退餐时间已过',
+            icon: 'none'
+          })
+        } else if (res.data.info == 'err') {
           wx.showToast({
             title: '请勿重复申请',
             icon: 'none'

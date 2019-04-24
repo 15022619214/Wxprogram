@@ -204,6 +204,7 @@ Page({
         s_.splice(g_[i].id, 1);
       }
     }
+    
     this.setData({
       modalinfo: {
         hidden: true

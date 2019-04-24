@@ -134,20 +134,33 @@
         </block>
       </radio-group>
     </scroll-view>
+    <button class='btnsaveT' type='warn' bindtap='leaveSubmitTime' hidden='{{showBtn}}'>
+        申请退餐
+    </button>
     <view class='rightbottom'></view>
     <view class='rightTop'>
       <text>请假时间及原因</text>
     </view>
     <form bindsubmit="leaveSubmit">
       <view class='flexcontent'>
-        <view class='flexchild_'>
+        <view class='flexchild_dt_date'>
           <picker mode="date" value="{{dateS}}" start="1999-01-01" end="2100-01-01" bindchange="bindDateS">
             请假时间[始]：{{dateS}}
           </picker>
         </view>
-        <view class='flexchild_'>
+        <view class='flexchild_dt_time'>
+          <picker mode="time" value="{{timeS}}" start="00:00" end="24:00" bindchange="bindTimeS">
+            {{timeS}}
+          </picker>
+        </view>
+        <view class='flexchild_dt_date'>
           <picker mode="date" value="{{dateM}}" start="{{start}}" end="2100-01-01" bindchange="bindDateM">
             请假时间[末]：{{dateM}}
+          </picker>
+        </view>
+        <view class='flexchild_dt_time'>
+          <picker mode="time" value="{{timeM}}" start="00:00" end="24:00" bindchange="bindTimeM">
+            {{timeM}}
           </picker>
         </view>
         <view class='flexchild_'>请假原因：
@@ -164,14 +177,18 @@
   </block>
   <block wx:elif='{{onCk == 2}}'>
     <view class='rightTop_'>
-      <text>请假记录</text>
+      <text>请假/退餐记录</text>
       <image src='../images/find.png' bindtap='findStu' wx:if='{{userinfo.role.id == 2}}'></image>
     </view>
     <scroll-view class='rightList_' scroll-y="true" style='height:{{logheight}}px' bindscrolltolower='scorbtn'>
-      <view class='logsyn' hidden='{{logsize}}'>----暂无请假记录----</view>
+      <view class='logsyn' hidden='{{logsize}}'>----暂无记录----</view>
       <block wx:for='{{logs}}' wx:key=''>
         <view class='logcontent'>
           <view class='flexcontent'>
+            <view class='flexchild_A'>类型：
+              <text wx:if='{{item.leavereasonone=="0"}}'>请假</text>
+              <text wx:elif='{{item.leavereasonone=="1"}}'>直接退餐</text>
+            </view>
             <view class='flexchild_A'>申请日期：
               <text>{{item.applydate}}</text>
             </view>
@@ -184,10 +201,10 @@
             <view class='flexchild_A'>学号：
               <text>{{item.stunumber}}</text>
             </view>
-            <view class='flexchild_A'>请假始末时间：
-              <text>{{item.leavedates}} 至 {{item.leavedatee}}</text>
+            <view class='flexchild_A'>时间：
+              <text>{{item.leavedates}} {{item.leavedatesm}} 至 {{item.leavedatee}} {{item.leavedateem}}</text>
             </view>
-            <view class='flexchild_A'>请假原因：</view>
+            <view class='flexchild_A'>原因：</view>
             <view class='flexchild_B'>
               <text>{{item.leavereason}}</text>
             </view>
