@@ -303,13 +303,13 @@
 }
 
 .mbtn {
-  width: 50%;
+  width: 33%;
   border-right: 2rpx solid #eee;
   float: left;
 }
 
 .cbtn {
-  width: 49%;
+  width: 33%;
   float: left;
 }
 

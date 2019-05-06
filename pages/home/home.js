@@ -346,8 +346,13 @@ Page({
       classes: '',
       ethnic: ''
     },
-
-
+    saveteachleave: {
+      id:0,
+      stuname: '',
+      stunumber: '',
+      istctoday:''
+    }, 
+    istctoday: ['是', '否'],
     cokeNum: 0,
 
     allnum: 0,
@@ -803,6 +808,25 @@ Page({
       }
     })
   },
+  //班主任为孩子请假
+  leavenewmodal: function (e) {
+    this.setData({
+      priinfor: {
+        hidden: true
+      },
+      onCk: 6,
+      saveteachleave: {
+        id: e.currentTarget.dataset.infors.id,
+        stuname: e.currentTarget.dataset.infors.stuname,
+        stunumber: e.currentTarget.dataset.infors.stunumber,
+        dateS: util.formatTime_yyyMMdd(new Date()),
+        dateM: util.formatTime_yyyMMdd(new Date()),
+        timeS: '08:00',
+        timeM: '17:00',
+        istctoday:'否'
+      }
+    })
+  },
   findStu: function() {
     this.setData({
       searchinfor: {
@@ -1220,6 +1244,61 @@ Page({
           console.log('已经下载的数据长度', res.totalBytesWritten)
           console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
         })
+      }
+    })
+  },
+  bindistctoday: function (e) {
+    this.setData({
+      saveteachleave: {
+        stuname: this.data.saveteachleave.stuname,
+        stunumber: this.data.saveteachleave.stunumber,
+        id: this.data.saveteachleave.id,
+        istctoday: this.data.istctoday[e.detail.value]
+      }
+    })
+  },
+  leaveSubmitteach: function (e) {
+    var data = {
+      'username': app.globalData.userOpenId,
+      'stuid': this.data.saveteachleave.id,
+      'leavedates': this.data.dateS,
+      'leavedatee': this.data.dateM,
+      'leavedatesm': this.data.timeS,
+      'leavedateem': this.data.timeM,
+      'istctoday': this.data.saveteachleave.istctoday=='否'?'false':'true'
+    }
+    var this_ = this;
+    wx.request({
+      url: app.globalData.appUrl + 'leave/saveLeavelogsteach',
+      method: 'GET',
+      data: {
+        'params': JSON.stringify(data)
+      },
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        wx.showToast({
+          title: res.data.istc,
+          icon: 'none',
+          duration: 3000
+        }) 
+        this_.setData({
+           onCk:2
+        })
+        pageNumber_a = 1;
+        logs = [];
+        this_.setData({
+          logs: []
+        })
+        var dataLeaveList = {
+          'leavedates': '',
+          'leavedatee': '',
+          'stunumber': '',
+          'stuname': '',
+          'username': app.globalData.userOpenId
+        }
+        getLeavelogList(this_, dataLeaveList);
       }
     })
   }

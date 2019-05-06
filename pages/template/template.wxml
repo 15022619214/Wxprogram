@@ -95,6 +95,7 @@
       </scroll-view>
       <view class='modal_footer'>
         <view bindtap='modifymodal' class='mbtn' data-infors='{{infors}}'>修改</view>
+         <view bindtap='leavenewmodal' class='mbtn' data-infors='{{infors}}'>请假</view>
         <view bindtap='closemodal' class='cbtn'>关闭</view>
       </view>
     </view>

@@ -141,7 +141,7 @@
       </radio-group>
     </scroll-view>
     <button class='btnsaveT' type='warn' bindtap='leaveSubmitTime' hidden='{{showBtn}}'>
-        申请退餐
+      申请退餐
     </button>
     <view class='rightbottom'></view>
     <view class='rightTop'>
@@ -247,7 +247,7 @@
       <picker bindchange="bindethnic" range="{{ethnic}}">
         <view class='putsty'>
           <image src='../images/TX.png'></image>
-          <text style='float:left;line-height:70rpx; font-weight: bold' space='emsp'>是否为回民: </text> 
+          <text style='float:left;line-height:70rpx; font-weight: bold' space='emsp'>是否为回民: </text>
           <input name="ethnic" style='float:left;margin-top:10rpx' type='text' value='{{savestu.ethnic}}' disabled='true'></input>
         </view>
       </picker>
@@ -323,5 +323,59 @@
     <!-- <view class='topList_btn_' bindtap='download'>
       导出
     </view> -->
+  </block>
+  <block wx:elif='{{onCk == 6}}'>
+    <view class='rightTop_'>
+      <text>学生请假{{onCk}}</text>
+    </view>
+    <form bindsubmit='leaveSubmitteach' class='forms'>
+      <view class='putsty'>
+        <image src='../images/TX.png'></image>
+        <text style='float:left;line-height:70rpx;font-weight: bold' space='emsp'>学生id: </text>
+        <input name="realname" style='float:left;margin-top:10rpx' type='text' value='{{saveteachleave.id}}'></input>
+      </view>
+      <view class='putsty'>
+        <image src='../images/TX.png'></image>
+        <text style='float:left;line-height:70rpx;font-weight: bold' space='emsp'>学生姓名: </text>
+        <input name="realname" style='float:left;margin-top:10rpx' type='text' value='{{saveteachleave.stuname}}'></input>
+      </view>
+      <view class='putsty'>
+        <image src='../images/TX.png'></image>
+        <text style='float:left;line-height:70rpx;font-weight: bold' space='emsp'>学号: </text>
+        <input name="jobnumber" style='float:left;margin-top:10rpx' type='number' value='{{saveteachleave.stunumber}}'></input>
+      </view>
+      <view class='flexcontent'>
+        <view class='flexchild_dt_date'>
+          <picker mode="date" value="{{dateS}}" start="1999-01-01" end="2100-01-01" bindchange="bindDateS">
+            请假时间[始]：{{dateS}}
+          </picker>
+        </view>
+        <view class='flexchild_dt_time'>
+          <picker mode="time" value="{{timeS}}" start="00:00" end="24:00" bindchange="bindTimeS">
+            {{timeS}}
+          </picker>
+        </view>
+        <view class='flexchild_dt_date'>
+          <picker mode="date" value="{{dateM}}" start="{{start}}" end="2100-01-01" bindchange="bindDateM">
+            请假时间[末]：{{dateM}}
+          </picker>
+        </view>
+        <view class='flexchild_dt_time'>
+          <picker mode="time" value="{{timeM}}" start="00:00" end="24:00" bindchange="bindTimeM">
+            {{timeM}}
+          </picker>
+        </view>
+      </view>
+      <picker bindchange="bindistctoday" range="{{istctoday}}">
+        <view class='putsty'>
+          <image src='../images/TX.png'></image>
+          <text style='float:left;line-height:70rpx; font-weight: bold' space='emsp'>今日是否退餐: </text>
+          <input name="istctoday" style='float:left;margin-top:10rpx' type='text' value='{{saveteachleave.istctoday}}' disabled='true'></input>
+        </view>
+      </picker>
+      <button class='btnsave' form-type='submit' type='warn'>
+        保存
+      </button>
+    </form>
   </block>
 </view>
