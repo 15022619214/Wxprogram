@@ -78,7 +78,7 @@
         <view class='{{userinfo.role.id == 2?"disinlineJS":"disinline"}}'>年级</view>
         <view class='{{userinfo.role.id == 2?"disinlineJS":"disinline"}}'>班级</view>
         <view class='{{userinfo.role.id == 2?"disinlineJS":"disinline"}}'>姓名</view>
-        <view class='{{userinfo.role.id == 2?"disinlineJS":"disinline"}}'>学号</view>
+        <view class='{{userinfo.role.id == 2?"disinlineJS":"disinline"}}'>是否回民</view>
         <view class='{{userinfo.role.id == 2?"disinlineJS":"disinline"}}' wx:if='{{userinfo.role.id == 2}}'>操作</view>
       </view>
       <scroll-view class='rightList_' scroll-y="true" style='height:{{scrollheight}}px' bindscrolltolower='scorStubtn'>
@@ -87,7 +87,7 @@
             <view class='{{userinfo.role.id == 2?"homeinlineJS":"homeinline"}}'>{{item.stugrade}}</view>
             <view class='{{userinfo.role.id == 2?"homeinlineJS":"homeinline"}}'>{{item.stuclass}}</view>
             <view class='{{userinfo.role.id == 2?"homeinlineJS":"homeinline"}}'>{{item.stuname}}</view>
-            <view class='{{userinfo.role.id == 2?"homeinlineJS":"homeinline"}}'>{{item.stunumber}}</view>
+            <view class='{{userinfo.role.id == 2?"homeinlineJS":"homeinline"}}'>{{item.ethnic}}</view>
             <view class='{{userinfo.role.id == 2?"homeinlineJS":"homeinline"}}' wx:if='{{userinfo.role.id == 2}}' bindtap='lookover' data-stunumber='{{item.stucode}}'>
               <image src='../images/Look.png' id='lokimg'></image>
             </view>
@@ -95,10 +95,16 @@
         </block>
       </scroll-view>
     </block>
-    <view class='topList_bottom' wx:if='{{userinfo.role.id == 2}}'>
+    <view class='topList_bottom' wx:if='{{userinfo.role.id == 2}}' style='height:{{hmtotal=="0" ? "30px":"90px"}}'>
       <view class='disinlineJS_'>总人数：{{allnum}}</view>
       <view class='disinlineJS_'>退餐人数：{{leavenums}}</view>
       <view class='disinlineJS_'>用餐人数：{{realnum}}</view>
+      <view class='disinlineJS_' hidden='{{hmtotal=="0"}}'>回民人数：{{hmtotal}}</view>
+      <view class='disinlineJS_' hidden='{{hmtotal=="0"}}'>回民退餐：{{hmtc}}</view>
+      <view class='disinlineJS_' hidden='{{hmtotal=="0"}}'>回民用餐：{{hmyc}}</view>
+      <view class='disinlineJS_' hidden='{{hmtotal=="0"}}'>非回民：{{fhmtotal}}</view>
+      <view class='disinlineJS_' hidden='{{hmtotal=="0"}}'>非回民退餐：{{fhmtc}}</view>
+      <view class='disinlineJS_' hidden='{{hmtotal=="0"}}'>非回民用餐：{{fhmyc}}</view>
     </view>
     <block wx:if='{{userinfo.role.id == 1||userinfo.role.id == -1}}'>
       <view class='ringCoke'>
@@ -238,6 +244,13 @@
         <text style='float:left;line-height:70rpx; font-weight: bold' space='emsp'>所在班级: </text>
         <input name="classes" style='float:left;margin-top:10rpx' type='text' value='{{savestu.classes}}' disabled='true'></input>
       </view>
+      <picker bindchange="bindethnic" range="{{ethnic}}">
+        <view class='putsty'>
+          <image src='../images/TX.png'></image>
+          <text style='float:left;line-height:70rpx; font-weight: bold' space='emsp'>是否为回民: </text> 
+          <input name="ethnic" style='float:left;margin-top:10rpx' type='text' value='{{savestu.ethnic}}' disabled='true'></input>
+        </view>
+      </picker>
       <button class='btnsave' form-type='submit' type='warn'>
         保存
       </button>

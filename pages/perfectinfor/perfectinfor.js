@@ -21,6 +21,7 @@ var findByuserinfo = function(this_) {
             item: res.data
           })
           for (var i = 0; i < res.data.pristudents.length; i++) {
+            g_.push(res.data.pristudents[i]);
             s_.push(res.data.pristudents[i].id);
           }
         } else if (res.data.role.id == 2) {
@@ -198,13 +199,25 @@ Page({
   getStuinfo: function(e) {
     g_.push(e.currentTarget.dataset.stuinfo);
     s_.push(e.currentTarget.dataset.stuinfo.id);
+    var num = 0;
+    var num_ = 0;
     for (var i = 0; i < g_.length; i++) {
+      console.log(g_[i].id == e.currentTarget.dataset.stuinfo.id)
       if (g_[i].id == e.currentTarget.dataset.stuinfo.id) {
-        g_.splice(g_[i].id, 1);
-        s_.splice(g_[i].id, 1);
+        num += 1;
+        if (num == 2) {
+          g_.splice(g_.indexOf(g_[i]), 1);
+        }
       }
     }
-    
+    for (var i = 0; i < s_.length; i++) {
+      if (s_[i] == e.currentTarget.dataset.stuinfo.id) {
+        num_ += 1;
+        if (num_ == 2) {
+          s_.splice(s_.indexOf(s_[i]), 1);
+        }
+      }
+    }
     this.setData({
       modalinfo: {
         hidden: true
@@ -266,6 +279,7 @@ Page({
         'teachclass': '',
         'relationship': relation_
       }
+      console.log(JSON.stringify(data_));
       wx.request({
         url: app.globalData.appUrl + 'admin/saveUser',
         method: 'GET',

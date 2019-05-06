@@ -1,12 +1,19 @@
 // pages/home/home.js
 const app = getApp();
 const util = require('../../utils/util.js');
-var teachgrade = null;    
+var teachgrade = null;
 var teachclass = null;
 var identity = '班主任';
 var month = '';
 var ids = [];
 var roleiden = '';
+var datserach = {
+  'leavedates': '',
+  'leavedatee': '',
+  'stunumber': '',
+  'stuname': '',
+  'username': app.globalData.userOpenId
+}
 var findByuserinfo = function(this_) {
   wx.request({
     url: app.globalData.appUrl + 'admin/getUserByopenid',
@@ -88,7 +95,7 @@ var getLeaveParen = function(this_) {
             logsize: true
           })
           pageNumber++;
-        } 
+        }
       }
       wx.hideNavigationBarLoading();
     }
@@ -186,8 +193,17 @@ var getLeavenumteach = function(this_) {
       this_.setData({
         allnum: res.data.allnum,
         leavenums: res.data.leavenums,
-        realnum: res.data.realnum
+        realnum: res.data.realnum,
+
+        hmtotal: res.data.hmtotal,
+        fhmtotal: res.data.fhmtotal,
+        hmtc: res.data.hmtc,
+
+        hmyc: res.data.hmyc,
+        fhmtc: res.data.fhmtc,
+        fhmyc: res.data.fhmyc
       })
+
     }
   })
 }
@@ -239,17 +255,16 @@ var leavelogsmonth = function(this_, month) {
   })
 }
 
-var datePk = function(this_){
+var datePk = function(this_) {
 
   var time = util.formatTime_HHmmss(new Date());
-  var date = new Date('2013-08-30 07:40');
-  var time_ = util.formatTime_HHmmss(date);
-
-  // if (time > time_){
-  //   this_.setData({
-  //     showBtn: true
-  //   })
-  // }
+  var a = parseInt(time.split(':')[0] + time.split(':')[1]);
+  var b = parseInt(740);
+  if (a > b) {
+    this_.setData({
+      showBtn: true
+    })
+  }
 }
 Page({
 
@@ -257,6 +272,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    ethnic: ['是', '否'],
     identity: '',
     userInfo: [],
     logs: [],
@@ -317,8 +333,8 @@ Page({
     userinfoStu: [],
     dateS: util.formatTime_yyyMMdd(new Date()),
     dateM: util.formatTime_yyyMMdd(new Date()),
-    timeS: util.formatTime_HHmmss(new Date()),
-    timeM: util.formatTime_HHmmss(new Date()),
+    timeS: '08:00',
+    timeM: '17:00',
     childid: 0,
     start: '',
     logsize: false,
@@ -327,15 +343,29 @@ Page({
       stuname: '',
       stunumber: '',
       grade: '',
-      classes: ''
+      classes: '',
+      ethnic: ''
     },
+
+
     cokeNum: 0,
+
     allnum: 0,
     leavenums: 0,
     realnum: 0,
+
+    hmtotal: 0,
+    fhmtotal: 0,
+    hmtc: 0,
+
+    hmyc: 0,
+    fhmtc: 0,
+    fhmyc: 0,
+
+
     selectAll: false,
     downloadfile: 0,
-    showBtn:false
+    showBtn: false
   },
   /**
    * 生命周期函数--监听页面加载
@@ -367,15 +397,26 @@ Page({
     })
     findByuserinfo(this);
     var this_ = this;
+
     wx.getSystemInfo({
       success: function(res) {
+        console.log(res.windowHeight);
         this_.setData({
           autoheight: res.windowHeight,
-          scrollheight: res.windowHeight - 369,
           logheight: res.windowHeight - 40,
           roleheight: res.windowHeight - 154,
           excelheight: res.windowHeight - 113
         })
+        console.log(this_.data.hmtotal);
+        if (this_.data.hmtotal == 0) {
+          this_.setData({
+            scrollheight: res.windowHeight - 363,
+          })
+        } else {
+          this_.setData({
+            scrollheight: res.windowHeight - 363 - 42,
+          })
+        }
       }
     });
   },
@@ -442,14 +483,7 @@ Page({
     if (this.data.userinfo.role.id == 3) {
       getLeaveParen(this);
     } else if (this.data.userinfo.role.id == 2) {
-      var dataLeaveList = {
-        'leavedates': '',
-        'leavedatee': '',
-        'stunumber': '',
-        'stuname': '',
-        'username': app.globalData.userOpenId
-      }
-      getLeavelogList(this, dataLeaveList);
+      getLeavelogList(this, datserach);
     }
   },
   scorStubtn: function() {
@@ -475,6 +509,17 @@ Page({
   confirm: function() {
     wx.reLaunch({
       url: '../perfectinfor/perfectinfor'
+    })
+  },
+  bindethnic: function(e) {
+    this.setData({
+      savestu: {
+        stuname: this.data.savestu.stuname,
+        stunumber: this.data.savestu.stunumber,
+        grade: this.data.savestu.grade,
+        classes: this.data.savestu.classes,
+        ethnic: this.data.ethnic[e.detail.value]
+      }
     })
   },
   changeList: function(e) {
@@ -569,12 +614,12 @@ Page({
       dateM: e.detail.value
     })
   },
-  bindTimeS: function (e) {
+  bindTimeS: function(e) {
     this.setData({
       timeS: e.detail.value,
     })
   },
-  bindTimeM: function (e) {
+  bindTimeM: function(e) {
     this.setData({
       timeM: e.detail.value
     })
@@ -614,26 +659,31 @@ Page({
         'Content-Type': 'application/json'
       },
       success: function(res) {
-        if (res.data.istc == 'ok') {
-          wx.showToast({
-            title: '申请成功，已退餐',
-            icon: 'none'
-          })
-        } else if (res.data.istc == 'no') {
-          wx.showToast({
-            title: '申请成功，当日退餐时间已过',
-            icon: 'none'
-          })
-        } else if (res.data.info == 'err'){
-          wx.showToast({
-            title: '请勿重复申请',
-            icon: 'none'
-          })
-        }
+        wx.showToast({
+          title: res.data.istc,
+          icon: 'none',
+          duration: 3000
+        })
+        // if (res.data.istc == 'ok') {
+        //   wx.showToast({
+        //     title: '申请成功，已退餐',
+        //     icon: 'none'
+        //   })
+        // } else if (res.data.istc == 'no') {
+        //   wx.showToast({
+        //     title: '申请成功，当日退餐时间已过',
+        //     icon: 'none'
+        //   })
+        // } else if (res.data.info == 'err'){
+        //   wx.showToast({
+        //     title: '请勿重复申请',
+        //     icon: 'none'
+        //   })
+        // }
       }
     })
   },
-  leaveSubmitTime: function (e) {
+  leaveSubmitTime: function(e) {
     if (this.data.childid == '') {
       wx.showToast({
         title: '请选择一个学生',
@@ -660,23 +710,12 @@ Page({
       header: {
         'Content-Type': 'application/json'
       },
-      success: function (res) {
-        if (res.data.istc == 'ok') {
-          wx.showToast({
-            title: '申请成功，已退餐',
-            icon: 'none'
-          })
-        } else if (res.data.istc == 'no') {
-          wx.showToast({
-            title: '申请成功，当日退餐时间已过',
-            icon: 'none'
-          })
-        } else if (res.data.info == 'err') {
-          wx.showToast({
-            title: '请勿重复申请',
-            icon: 'none'
-          })
-        }
+      success: function(res) {
+        wx.showToast({
+          title: res.data.istc,
+          icon: 'none',
+          duration: 3000
+        })
       }
     })
   },
@@ -759,7 +798,8 @@ Page({
         stuname: e.currentTarget.dataset.infors.stuname,
         stunumber: e.currentTarget.dataset.infors.stunumber,
         grade: e.currentTarget.dataset.infors.stugrade,
-        classes: e.currentTarget.dataset.infors.stuclass
+        classes: e.currentTarget.dataset.infors.stuclass,
+        ethnic: ''
       }
     })
   },
@@ -839,6 +879,7 @@ Page({
       'stuname': e.detail.value.stuname,
       'username': app.globalData.userOpenId
     }
+    datserach = dataLeaveList;
     getLeavelogList(this, dataLeaveList);
   },
   restUlogs: function() {
@@ -948,7 +989,8 @@ Page({
       'stuname': e.detail.value.realname,
       'stunumber': e.detail.value.jobnumber,
       'stugrade': e.detail.value.grade,
-      'stuclass': e.detail.value.classes
+      'stuclass': e.detail.value.classes,
+      'ethnic': e.detail.value.ethnic
     }
     wx.request({
       url: app.globalData.appUrl + 'admin/savePristuds',
@@ -970,7 +1012,8 @@ Page({
               stuname: '',
               stunumber: '',
               grade: teachgrade,
-              classes: teachclass
+              classes: teachclass,
+              ethnic: ''
             }
           })
         } else if (res.data.info == 'edit') {
@@ -983,7 +1026,8 @@ Page({
               stuname: '',
               stunumber: '',
               grade: teachgrade,
-              classes: teachclass
+              classes: teachclass,
+              ethnic: ''
             }
           })
         }
